@@ -3,6 +3,7 @@ const MONGO_CONN_URL =
 
 const ALERT_COLLECTION = "Alerts";
 const USER_COLLECTION = 'Users';
+const COMPLAINT_COLLECTION = 'Complaints';
 
 // user="Diya";
 // password="diya@mongo";

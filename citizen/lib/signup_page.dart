@@ -1,8 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:complaint_app/dbHelper/constant.dart';
-import 'package:complaint_app/dbHelper/datamodels.dart';
-import 'package:complaint_app/user_dashboard.dart';
+import 'dbHelper/constant.dart';
+import 'dbHelper/datamodels.dart';
+import 'user_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo_dart;
 import 'dbHelper/mongodb.dart';

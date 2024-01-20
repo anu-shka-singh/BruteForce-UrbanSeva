@@ -16,3 +16,18 @@ class User {
 
   Map<String, dynamic> toJson() => {'email': email, 'pswd': pswd, 'name': name};
 }
+
+class Complaint {
+  final String problemType;
+  final String probText;
+  final String problemDesc;
+  final String base64Image;
+  final int isUrgent;
+
+  Complaint({required this.problemType, required this.probText, required this.problemDesc, required this.base64Image, required this.isUrgent});
+
+  factory Complaint.fromJson(Map<String, dynamic> json) => 
+    Complaint(problemType: json['problemType'], probText: json['probText'], problemDesc: json['problemDesc'], base64Image: json['base64Image'], isUrgent: json['isUrgent']);
+
+  Map<String ,dynamic> toJson() => {'problemType': problemType, 'probText': probText, 'problemDesc': problemDesc, 'base64Image': base64Image, 'isUrgent': isUrgent};
+}

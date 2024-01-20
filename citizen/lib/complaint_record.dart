@@ -1,8 +1,13 @@
+import 'dbHelper/constant.dart';
+import 'dbHelper/datamodels.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'complaint_confirm.dart';
 import 'package:tflite/tflite.dart';
+import 'dart:convert';
+
+import 'dbHelper/mongodb.dart';
 
 class TakeComplain extends StatefulWidget {
   final String probType;
@@ -17,6 +22,7 @@ class _TakeComplainState extends State<TakeComplain> {
   File? _image; // Variable to store the taken image
   List _predictions = [];
   String status = "Not Verified";
+  String base64Image = '';
 
   @override
   void initState() {
@@ -41,7 +47,7 @@ class _TakeComplainState extends State<TakeComplain> {
 
   loadmodel() async {
     await Tflite.loadModel(
-        model: 'assets/classify.tflite', labels: 'assets/labels.txt');
+        model: 'assets/categorize.tflite', labels: 'assets/label.txt');
   }
 
   @override
@@ -55,6 +61,8 @@ class _TakeComplainState extends State<TakeComplain> {
     if (image != null) {
       setState(() {
         _image = File(image.path); // Store the taken image
+        final bytes = File(_image!.path).readAsBytesSync();
+        base64Image = "data:image/png;base64," + base64Encode(bytes); //converting to base 64 image for storage
       });
     }
 
@@ -462,13 +470,24 @@ class _TakeComplainState extends State<TakeComplain> {
                           ),
                           const SizedBox(height: 5),
                           ElevatedButton(
-                            onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const ComplaintConfirmation(),
-                              ),
-                            ),
+                            onPressed: () async {
+                              final data = Complaint(
+                                  problemType: widget.probType,
+                                  probText: problems[widget.index][selectedRadio],
+                                  problemDesc: probDesc,
+                                  base64Image: base64Image,
+                                  isUrgent: isUrgent);
+                              await MongoDatabase.db
+                                  .collection(COMPLAINT_COLLECTION)
+                                  .insert(data.toJson());
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ComplaintConfirmation(),
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               primary: const Color(0xFF21222D), // Button color
                               onPrimary: Colors.white, // Text color
