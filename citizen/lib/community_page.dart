@@ -60,6 +60,15 @@ class CommunitiesState extends State<Communities> {
             builder: (context) => ChatBotScreen(user: widget.user)),
       );
     }
+    else if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ChatBotScreen(
+              user: widget.user,
+            )),
+      );
+    }
   }
 
   @override
@@ -167,6 +176,7 @@ class CommunitiesState extends State<Communities> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
+              size: 30,
               color: Color(0xFF21222D),
             ),
             label: 'Home',
@@ -174,6 +184,7 @@ class CommunitiesState extends State<Communities> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.group,
+              size: 30,
               color: Color(0xFF21222D),
             ),
             label: 'Community',
@@ -181,9 +192,18 @@ class CommunitiesState extends State<Communities> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.chat,
+              size: 30,
               color: Color(0xFF21222D),
             ),
             label: 'Chat Bot',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              color: Color(0xFF21222D),
+              size: 30,
+            ),
+            label: 'Profile',
           ),
         ],
       ),

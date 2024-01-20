@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:complaint_app/profile.dart';
 import 'package:http/http.dart' as http;
 import 'community_page.dart';
 import 'announcements.dart';
@@ -41,7 +42,7 @@ Future<Position> _getCurrentLocation() async {
 
 class DashboardState extends State<Dashboard> {
   Position? currentLocation;
-  String loc = "Can't Find your location";
+  String loc = "Loading..";
 
   @override
   void initState() {
@@ -138,6 +139,12 @@ class DashboardState extends State<Dashboard> {
             builder: (context) => ChatBotScreen(
                   user: widget.user,
                 )),
+      );
+    } else if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ProfileScreen(user: widget.user,)),
       );
     }
   }
@@ -464,6 +471,14 @@ class DashboardState extends State<Dashboard> {
               size: 30,
             ),
             label: 'Chat Bot',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              color: Color(0xFF21222D),
+              size: 30,
+            ),
+            label: 'Profile',
           ),
         ],
       ),

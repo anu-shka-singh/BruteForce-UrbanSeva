@@ -1,8 +1,16 @@
+import 'package:complaint_app/user_provider.dart';
+import 'package:provider/provider.dart';
+
 import 'splash.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
