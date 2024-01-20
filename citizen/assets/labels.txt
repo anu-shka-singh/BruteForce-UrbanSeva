@@ -1,0 +1,5 @@
+0 potholes
+1 Garbage
+2 road
+3 stray_animal
+4 water_logging
