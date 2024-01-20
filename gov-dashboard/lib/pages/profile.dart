@@ -1,29 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../dbHelper/constant.dart';
-import '../dbHelper/mongodb.dart';
 import '../widgets/menu.dart';
-import 'package:mongo_dart/mongo_dart.dart' as mongo_dart;
 import 'home/user_provider.dart';
-import 'login.dart';
-
-
 
 class ProfileScreen extends StatefulWidget {
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
-
 }
+
 class _ProfileScreenState extends State<ProfileScreen> {
   late Map<String, dynamic> userData;
-
 
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
-
-    // Access userEmail
-    final userEmail = userProvider.userEmail;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       userProvider.fetchData();
@@ -50,7 +40,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     vertical: 40.0,
                     horizontal: 60.0, // Horizontal padding
                   ),
-
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -59,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           CircleAvatar(
                             radius: 50,
                             backgroundImage:
-                            AssetImage('assets/images/user_icon.png'),
+                                AssetImage('assets/images/user_icon.png'),
                           ),
                           SizedBox(width: 120),
                           Text(
@@ -72,16 +61,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ],
                       ),
                       SizedBox(height: 40),
-                      UserProfileInfo(label: 'Name', value: '${userProvider.userData!['name']}'),
+                      UserProfileInfo(
+                          label: 'Name',
+                          value: '${userProvider.userData!['name']}'),
                       SizedBox(height: 20),
                       UserProfileInfo(
-                          label: 'Email', value: '${userProvider.userData!['email']}'),
+                          label: 'Email',
+                          value: '${userProvider.userData!['email']}'),
                       SizedBox(height: 20),
-                      UserProfileInfo(label: 'Phone', value: '${userProvider.userData!['phone']}'),
+                      UserProfileInfo(
+                          label: 'Phone',
+                          value: '${userProvider.userData!['phone']}'),
                       SizedBox(height: 20),
-                      UserProfileInfo(label: 'Pin Code', value: '${userProvider.userData!['pincode']}'),
+                      UserProfileInfo(
+                          label: 'Pin Code',
+                          value: '${userProvider.userData!['pincode']}'),
                       SizedBox(height: 20),
-                      UserProfileInfo(label: 'Zone', value: '${userProvider.userData!['zone']}'),
+                      UserProfileInfo(
+                          label: 'Zone',
+                          value: '${userProvider.userData!['zone']}'),
                       SizedBox(height: 20),
                     ],
                   ),
@@ -94,8 +92,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-
-
 
 class UserProfileInfo extends StatelessWidget {
   final String label;
@@ -128,5 +124,3 @@ class UserProfileInfo extends StatelessWidget {
     );
   }
 }
-
-

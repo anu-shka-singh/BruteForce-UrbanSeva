@@ -4,9 +4,6 @@ import '../../dbHelper/constant.dart';
 import '../../dbHelper/mongodb.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo_dart;
 
-import '../login.dart';
-
-
 class UserProvider extends ChangeNotifier {
   String _userEmail = '';
   Map<String, dynamic>? userData;
@@ -24,10 +21,6 @@ class UserProvider extends ChangeNotifier {
       userData = await userCollection.findOne(
         mongo_dart.where.eq('email', _userEmail),
       );
-
-      // If methods is not empty, a user with this email exists
-      // Fetch additional data based on the email
-      // ...
 
       // Notify listeners to update the UI
       notifyListeners();
