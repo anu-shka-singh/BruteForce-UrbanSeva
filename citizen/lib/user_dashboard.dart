@@ -133,7 +133,7 @@ class DashboardState extends State<Dashboard> {
     }
   }
 
-  Future<String> reverseGeocode() async {
+  void reverseGeocode() async {
     var latitude = currentLocation?.latitude;
     var longitude = currentLocation?.longitude;
     final url =
@@ -146,13 +146,13 @@ class DashboardState extends State<Dashboard> {
         final data = json.decode(response.body);
 
         if (data.containsKey('display_name')) {
-          return data['display_name'];
+          loc= data['display_name'];
         }
       }
     } catch (e) {
       print('Error: $e');
     }
-    return 'Loading';
+    //return 'Loading';
   }
 
   @override
@@ -202,24 +202,6 @@ class DashboardState extends State<Dashboard> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    loc.length > 30 ? '${loc.substring(0, 30)}...' : loc,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 0.0, 12.0, 20.0),
                     child: Image.asset(
