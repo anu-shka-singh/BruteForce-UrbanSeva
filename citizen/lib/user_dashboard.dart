@@ -230,7 +230,7 @@ class DashboardState extends State<Dashboard> {
                     ),
                   ),
                   Text(
-                    loc,
+                    loc.length > 15 ? '${loc.substring(0, 15)}...' : loc,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -381,7 +381,8 @@ class DashboardState extends State<Dashboard> {
                                             : Colors.red,
                                       ),
                                     ),
-                                    if (taskIndex < completedTasks.length - 1)
+                                    if (taskIndex <
+                                        completedTasks[index].length - 1)
                                       Container(
                                         width: 3,
                                         height: 29,
