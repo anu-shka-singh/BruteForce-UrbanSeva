@@ -1,5 +1,5 @@
 # Urban Seva
-Connecting Communities, Solving Urban Challenges
+Connecting Communities, Solving Urban Challenges.
 
 Our app emerges as a beacon of change and progress in a world where citizens' voices often go unheard and essential infrastructure issues linger unresolved. It addresses the age-old problem of inefficient communication between citizens and their government. This brings transparency to the forefront, enabling real-time issue reporting and verification, fostering community engagement, and empowering governments to act swiftly and efficiently.
 
