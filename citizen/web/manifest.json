@@ -1,6 +1,6 @@
 {
-    "name": "complaint_app",
-    "short_name": "complaint_app",
+    "name": "citizen",
+    "short_name": "citizen",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

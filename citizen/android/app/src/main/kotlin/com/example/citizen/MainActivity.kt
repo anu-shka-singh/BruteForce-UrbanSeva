@@ -1,4 +1,4 @@
-package com.example.complaint_app
+package com.example.citizen
 
 import io.flutter.embedding.android.FlutterActivity
 

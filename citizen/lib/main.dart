@@ -1,4 +1,4 @@
-import 'package:complaint_app/user_provider.dart';
+import 'user_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'splash.dart';

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:complaint_app/profile.dart';
+import 'profile.dart';
 import 'package:http/http.dart' as http;
 import 'community_page.dart';
 import 'announcements.dart';

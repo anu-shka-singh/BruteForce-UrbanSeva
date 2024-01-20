@@ -1,11 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-feature android:name="android.hardware.location.gps" />
-
     <application
-        android:label="complaint_app"
+        android:label="citizen"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
