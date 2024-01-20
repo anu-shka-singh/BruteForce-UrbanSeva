@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dashboard/Responsive.dart';
+import 'package:flutter_dashboard/responsive.dart';
 import 'package:flutter_dashboard/model/health_model.dart';
 import 'package:flutter_dashboard/widgets/custom_card.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,13 +9,16 @@ class ActivityDetailsCard extends StatelessWidget {
 
   final List<HealthModel> healthDetails = const [
     HealthModel(
-        icon: 'assets/svg/burn.svg', value: "28", title: "Roads and Transportation"),
+        icon: 'assets/svg/burn.svg',
+        value: "28",
+        title: "Roads and Transportation"),
     HealthModel(
         icon: 'assets/svg/steps.svg', value: "23", title: "Water and Sewer"),
     HealthModel(
-        icon: 'assets/svg/distance.svg', value: "10", title: "Electricity and Power"),
-    HealthModel(
-        icon: 'assets/svg/sleep.svg', value: "22", title: "Sanitation"),
+        icon: 'assets/svg/distance.svg',
+        value: "10",
+        title: "Electricity and Power"),
+    HealthModel(icon: 'assets/svg/sleep.svg', value: "22", title: "Sanitation"),
     HealthModel(
         icon: 'assets/svg/sleep.svg', value: "22", title: "Stray Animals"),
   ];
