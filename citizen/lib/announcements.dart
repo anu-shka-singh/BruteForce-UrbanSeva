@@ -1,21 +1,36 @@
 import 'package:flutter/material.dart';
+import 'dbHelper/mongodb.dart';
 
 void main() {
   runApp(
     const MaterialApp(
-      home: Announcements(),
+      home: Alerts(),
     ),
   );
 }
 
-class Announcements extends StatefulWidget {
-  const Announcements({super.key});
+class Alerts extends StatefulWidget {
+  const Alerts({super.key});
 
   @override
-  State<Announcements> createState() => _AnnouncementsState();
+  State<Alerts> createState() => _AlertsState();
 }
 
-class _AnnouncementsState extends State<Announcements> {
+class _AlertsState extends State<Alerts> {
+  List<Map<String, dynamic>> Alerts = [];
+
+  void initState() {
+    super.initState();
+    fetchAlerts();
+  }
+
+  Future<void> fetchAlerts() async {
+    final collection = MongoDatabase.db.collection('Alerts');
+    final cursor = await collection.find();
+    Alerts = await cursor.toList();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +60,7 @@ class _AnnouncementsState extends State<Announcements> {
                     //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Announcements",
+                        "Alerts",
                         style: TextStyle(
                             fontSize: 35,
                             //fontWeight: FontWeight.bold,
@@ -63,29 +78,19 @@ class _AnnouncementsState extends State<Announcements> {
               const SizedBox(
                 height: 20,
               ),
-              const CustomCard(
-                dept: "Delhi Jal Board",
-                dateTime: "20th Oct at 12:20PM",
-                msg:
-                    "All the residents of the Dwarka Sector 12 area kindly note that water services have been disbanded till 9PM today. We regret the inconvinience caused due to this.",
-              ),
-              const CustomCard(
-                dept: "NDMC",
-                dateTime: "20th Oct at 1:00PM",
-                msg:
-                    "All residents of Rohini Sector 10 are hereby advised to not travel towards the main road with their vehicles as it is being closed due to construction.",
-              ),
-              const CustomCard(
-                dept: "BSES",
-                dateTime: "20th Oct at 1:37PM",
-                msg:
-                    "Residents of Janakpuri Block J are hereby informed that there will be a power outage in the area from 8PM to 12AM. Inconvenience caused is regretted.",
-              ),
-              const CustomCard(
-                dept: "SDMC",
-                dateTime: "19th Oct at 5PM",
-                msg:
-                    "The road from Vegas Mall to Apollo Hospital has been closed due to metro construction work. Citizens are advised to take other routes for travelling.",
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: Alerts.length,
+                itemBuilder: (context, index) {
+                  final announcement = Alerts[index];
+                  return CustomCard(
+                    dept: announcement['auth'],
+                    dateTime:
+                        announcement['date'] + ' at ' + announcement['time'],
+                    msg: announcement['desc'],
+                  );
+                },
               ),
             ],
           ),

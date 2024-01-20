@@ -25,8 +25,6 @@ class _AddIssueState extends State<AddAlert> {
   List<String> categories = ['NDMC', 'Jal Board', 'BSES', 'SDMC'];
 
   DateTime? selectedDate; // To store the selected date
-  DateTime? startTime; // To store the selected start time
-  DateTime? endTime; // To store the selected end time
 
   final TextEditingController detailsController = TextEditingController();
   final TextEditingController reasonController = TextEditingController();
@@ -131,14 +129,14 @@ class _AddIssueState extends State<AddAlert> {
                     onPressed: () async {
                       // Create an Issue object with the data from text fields
                       final alert = Alert(
-                          auth: selectedCategory,
-                          date: selectedDate != null
-                              ? DateFormat("yyyy-MM-dd").format(selectedDate!)
-                              : '',
-                          desc:
-                              '${detailsController.text} due to ${reasonController.text} in ${locationController.text} (${pincodeController.text})',
-                          sTime: startTime.toString(),
-                          eTime: endTime.toString());
+                        auth: selectedCategory,
+                        date: selectedDate != null
+                            ? DateFormat("yyyy-MM-dd").format(selectedDate!)
+                            : '',
+                        desc:
+                            '${detailsController.text} due to ${reasonController.text} in ${locationController.text} (${pincodeController.text})',
+                        time: '${DateTime.now().hour}:${DateTime.now().minute}',
+                      );
 
                       // Insert the issue into the database
                       await MongoDatabase.db

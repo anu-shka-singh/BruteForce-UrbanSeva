@@ -8,29 +8,27 @@ class Alert {
   final String auth;
   final String desc;
   final String date;
-  final String sTime;
-  final String eTime;
+  final String time;
 
-  Alert(
-      {required this.auth,
-      required this.desc,
-      required this.date,
-      required this.sTime,
-      required this.eTime});
+  Alert({
+    required this.auth,
+    required this.desc,
+    required this.date,
+    required this.time,
+  });
 
   factory Alert.fromJson(Map<String, dynamic> json) => Alert(
-      auth: json['auth'],
-      desc: json['desc'],
-      date: json['date'],
-      sTime: json['sTime'],
-      eTime: json['eTime']);
+        auth: json['auth'],
+        desc: json['desc'],
+        date: json['date'],
+        time: json['time'],
+      );
 
   Map<String, dynamic> toJson() => {
         'auth': auth,
         'desc': desc,
         'date': date,
-        'sTime': sTime,
-        'eTime': eTime
+        'time': time,
       };
 }
 

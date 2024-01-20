@@ -177,7 +177,7 @@ class DashboardState extends State<Dashboard> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const Announcements(),
+                  builder: (context) => const Alerts(),
                 ),
               );
             },
@@ -230,7 +230,7 @@ class DashboardState extends State<Dashboard> {
                     ),
                   ),
                   Text(
-                    loc.length > 15 ? '${loc.substring(0, 15)}...' : loc,
+                    loc.length > 30 ? '${loc.substring(0, 30)}...' : loc,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
