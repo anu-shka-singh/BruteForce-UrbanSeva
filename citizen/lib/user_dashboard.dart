@@ -105,8 +105,8 @@ class DashboardState extends State<Dashboard> {
         context,
         MaterialPageRoute(
             builder: (context) => Dashboard(
-                  user: widget.user,
-                )),
+              user: widget.user,
+            )),
       );
     } else if (index == 1) {
       Navigator.push(
@@ -118,8 +118,8 @@ class DashboardState extends State<Dashboard> {
         context,
         MaterialPageRoute(
             builder: (context) => ChatBotScreen(
-                  user: widget.user,
-                )),
+              user: widget.user,
+            )),
       );
     } else if (index == 3) {
       Navigator.push(
@@ -128,6 +128,7 @@ class DashboardState extends State<Dashboard> {
             builder: (context) => ProfileScreen(
                   user: widget.user,
                 )),
+
       );
     }
   }
@@ -189,29 +190,19 @@ class DashboardState extends State<Dashboard> {
       ),
       body: SingleChildScrollView(
           child: Column(children: [
-        Container(
-          //color: Colors.grey.shade100,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Color(0xFF21222D),
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(70),
-            ),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 12.0, 20.0),
-                child: Image.asset(
-                  'images/female.png',
-                  height: 60,
-                  width: 60,
+            Container(
+              //color: Colors.grey.shade100,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Color(0xFF21222D),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(70),
                 ),
               ),
-              Column(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   Text(
                     name,
                     style: const TextStyle(
@@ -228,207 +219,236 @@ class DashboardState extends State<Dashboard> {
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(
-                    height: 30,
+
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 0.0, 12.0, 20.0),
+                    child: Image.asset(
+                      'images/female.png',
+                      height: 60,
+                      width: 60,
+
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        loc.length > 30 ? '${loc.substring(0, 30)}...' : loc,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Card(
-          elevation: 9,
-          color: const Color.fromARGB(255, 255, 255, 255),
-          margin: const EdgeInsets.all(14.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Replace the Icon with an Image widget
-                Image.asset(
-                  'images/map.png', // Provide the path to your image
-                  width: 70, // Adjust the width as needed
-                  height: 90, // Adjust the height as needed
-                ),
-                const SizedBox(width: 20),
-                Column(
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Card(
+              elevation: 9,
+              color: const Color.fromARGB(255, 255, 255, 255),
+              margin: const EdgeInsets.all(14.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // Replace the Icon with an Image widget
+                    Image.asset(
+                      'images/map.png', // Provide the path to your image
+                      width: 70, // Adjust the width as needed
+                      height: 90, // Adjust the height as needed
+                    ),
+                    const SizedBox(width: 20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Issues Near You",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.arrow_forward),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MapScreen(
-                                  // Pass the coordinates to MapScreen
-                                  initialLatitude: currentLocation?.latitude,
-                                  initialLongitude: currentLocation?.longitude,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      "See various issues in your locality",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "My Issues",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 10),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: issue.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    color: taskColors[index],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    elevation: 2,
-                    margin: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        ListTile(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          contentPadding: const EdgeInsets.all(16.0),
-                          title: Text(
-                            issue[index],
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          subtitle: Text(
-                            sub[index],
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 3, 31, 54),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16,
-                            ),
-                          ),
-                          tileColor: taskColors[index],
-                        ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const SizedBox(
-                              width: 10,
+                            const Text(
+                              "Issues Near You",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
-                            Column(
-                              children: completedTasks[index]
-                                  .asMap()
-                                  .entries
-                                  .map((entry) {
-                                final taskIndex = entry.key;
-                                final completed = entry.value;
-                                return Column(
-                                  children: [
-                                    Container(
-                                      width: 16,
-                                      height: 8,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: completed
-                                            ? Colors.green
-                                            : Colors.red,
-                                      ),
+                            IconButton(
+                              icon: const Icon(Icons.arrow_forward),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MapScreen(
+                                      // Pass the coordinates to MapScreen
+                                      initialLatitude: currentLocation?.latitude,
+                                      initialLongitude: currentLocation?.longitude,
                                     ),
-                                    if (taskIndex <
-                                        completedTasks[index].length - 1)
-                                      Container(
-                                        width: 3,
-                                        height: 29,
-                                        color: completed
-                                            ? Colors.green
-                                            : Colors.grey,
-                                      ),
-                                  ],
+                                  ),
                                 );
-                              }).toList(),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Issue Registered",
-                                    style: TextStyle(fontSize: 14)),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text("Forwarded to authorities",
-                                    style: TextStyle(fontSize: 14)),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text("Action Initiated",
-                                    style: TextStyle(fontSize: 14)),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text("Action in Progress",
-                                    style: TextStyle(fontSize: 14)),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text("Resolved",
-                                    style: TextStyle(fontSize: 14)),
-                              ],
+                              },
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        )
+                        const SizedBox(height: 10),
+                        const Text(
+                          "See various issues in your locality",
+                          style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 20),
                       ],
                     ),
-                  );
-                },
+                  ],
+                ),
               ),
-            ],
-          ),
-        )
-      ])),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "My Issues",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: issue.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        color: taskColors[index],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        elevation: 2,
+                        margin: const EdgeInsets.all(12.0),
+                        child: Column(
+                          children: [
+                            ListTile(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              contentPadding: const EdgeInsets.all(16.0),
+                              title: Text(
+                                issue[index],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              subtitle: Text(
+                                sub[index],
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 3, 31, 54),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              tileColor: taskColors[index],
+                            ),
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Column(
+                                  children: completedTasks[index]
+                                      .asMap()
+                                      .entries
+                                      .map((entry) {
+                                    final taskIndex = entry.key;
+                                    final completed = entry.value;
+                                    return Column(
+                                      children: [
+                                        Container(
+                                          width: 16,
+                                          height: 8,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: completed
+                                                ? Colors.green
+                                                : Colors.red,
+                                          ),
+                                        ),
+                                        if (taskIndex <
+                                            completedTasks[index].length - 1)
+                                          Container(
+                                            width: 3,
+                                            height: 29,
+                                            color: completed
+                                                ? Colors.green
+                                                : Colors.grey,
+                                          ),
+                                      ],
+                                    );
+                                  }).toList(),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Issue Registered",
+                                        style: TextStyle(fontSize: 14)),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text("Forwarded to authorities",
+                                        style: TextStyle(fontSize: 14)),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text("Action Initiated",
+                                        style: TextStyle(fontSize: 14)),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text("Action in Progress",
+                                        style: TextStyle(fontSize: 14)),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text("Resolved",
+                                        style: TextStyle(fontSize: 14)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            )
+          ])),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTapped,
         items: const [

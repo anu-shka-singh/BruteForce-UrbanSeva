@@ -49,7 +49,7 @@ class CommunitiesState extends State<Communities> {
         context,
         MaterialPageRoute(
             builder: (context) => Dashboard(
-                  user: '',
+                  user: widget.user,
                 )),
       );
     } else if (index == 1) {
