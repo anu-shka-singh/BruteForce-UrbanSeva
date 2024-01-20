@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard/dashboard.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo_dart;
+import '../../dbHelper/mongodb.dart';
+import '../../dbHelper/constant.dart';
+
+final TextEditingController _passwordTextController = TextEditingController();
+final TextEditingController _emailTextController = TextEditingController();
+var userData;
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
-  // Define a map of credentials (username and password)
-  final Map<String, String> credentials = {
-    'gov7856': '123456',
-    'mcd1234': '987654',
-  };
-
   @override
   Widget build(BuildContext context) {
-    String username = '';
+    String email = '';
     String password = '';
 
     return Scaffold(
@@ -46,10 +47,10 @@ class LoginPage extends StatelessWidget {
                 ),
                 TextField(
                   decoration: const InputDecoration(
-                    labelText: 'Username',
+                    labelText: 'Email',
                   ),
                   onChanged: (value) {
-                    username = value;
+                   email = value;
                   },
                 ),
                 const SizedBox(height: 20),
@@ -64,31 +65,63 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {
-                    // Check if the entered credentials are valid
-                    if (credentials.containsKey(username) &&
-                        credentials[username] == password) {
-                      // Navigate to the Home Page if credentials are valid
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => DashBoard()),
-                      );
-                    } else {
-                      // Show an invalid credentials dialog box
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('Invalid Credentials'),
-                          content: const Text(
-                              'Please check the username and password.'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text('OK'),
+                  onPressed: () async {
+                    try{
+                      bool userExists =
+                      await doesUserExists(email);
+                      if (userExists) {
+                        String userEmail = email;
+                        while (userData['pswd'] != password) {
+                          await showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text("Try Again"),
+                              content: const Text('Incorrect Password'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          LoginPage()),
+                                    );
+                                    _emailTextController.text = userEmail;
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
+                          );
+                        }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DashBoard()),
+                        );
+                      }
+                      else
+                        {
+                          await showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text("Invalid Credentials"),
+                              content: const Text('Try Again'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginPage()),
+                                  ),
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                    }
+                    catch (e) {
+                      print('Error connecting to MongoDB: $e');
                     }
                   },
                   style: ButtonStyle(
@@ -107,5 +140,21 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<bool> doesUserExists(String email) async {
+  try {
+    // Check if the email is already registered
+    final userCollection = MongoDatabase.db.collection(GOVN_COLLECTION);
+    userData = await userCollection.findOne(
+      mongo_dart.where.eq('email', email),
+    );
+
+    // If methods is not empty, a user with this email exists
+    return userData.isNotEmpty;
+  } catch (e) {
+    // Handle any errors
+    return false;
   }
 }
