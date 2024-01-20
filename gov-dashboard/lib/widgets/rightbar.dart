@@ -53,13 +53,11 @@ class Profile extends StatelessWidget {
               const Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ProfileTile(
-                      icon: Icons.directions_car,
-                      title: "Roads and Transportation"),
+                  ProfileTile(icon: Icons.directions_car, title: "Roads and Transportation"),
                   ProfileTile(icon: Icons.opacity, title: "Water and Sewer"),
-                  ProfileTile(
-                      icon: Icons.power, title: "Electricity and Power"),
+                  ProfileTile(icon: Icons.power, title: "Electricity and Power"),
                   ProfileTile(icon: Icons.delete, title: "Sanitation"),
+                  ProfileTile(icon: Icons.pets, title: "Stray Animal"),
                 ],
               ),
             ],
@@ -84,7 +82,7 @@ class PieChartWidget extends StatelessWidget {
       ),
       PieChartSectionData(
         title: 'Water and Sewer',
-        value: 30,
+        value: 20,
         color: Colors.blue,
         showTitle: false,
       ),
@@ -98,6 +96,12 @@ class PieChartWidget extends StatelessWidget {
         title: 'Sanitation',
         value: 25,
         color: Colors.red,
+        showTitle: false,
+      ),
+      PieChartSectionData(
+        title: 'Stray Animals',
+        value: 10,
+        color: Colors.purpleAccent,
         showTitle: false,
       ),
     ];

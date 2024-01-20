@@ -16,6 +16,8 @@ class ActivityDetailsCard extends StatelessWidget {
         icon: 'assets/svg/distance.svg', value: "10", title: "Electricity and Power"),
     HealthModel(
         icon: 'assets/svg/sleep.svg', value: "22", title: "Sanitation"),
+    HealthModel(
+        icon: 'assets/svg/sleep.svg', value: "22", title: "Stray Animals"),
   ];
 
   @override
