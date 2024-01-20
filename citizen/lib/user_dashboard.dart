@@ -1,8 +1,8 @@
-import 'package:complaint_app/community_page.dart';
-import 'package:complaint_app/announcements.dart';
-import 'package:complaint_app/map_page.dart';
-import 'package:complaint_app/select_problem.dart';
-import 'package:complaint_app/signin_page.dart';
+import 'community_page.dart';
+import 'announcements.dart';
+import 'map_page.dart';
+import 'select_problem.dart';
+import 'signin_page.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'chatbot_screen.dart';
