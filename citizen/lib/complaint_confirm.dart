@@ -48,16 +48,22 @@ class _ComplaintConfirmationState extends State<ComplaintConfirmation> {
               const SizedBox(
                   height: 50.0), // Add a SizedBox for spacing at the top
               Image.asset(
-                'images/confetti.png', // Replace with your image path
-                height: 200,
-                width: 200,
+                'images/reward.png', // Replace with your image path
+                height: 150,
+                width: 150,
               ),
               const SizedBox(height: 40.0),
+              const Text(
+                "You received 5 points.",
+                style: TextStyle(color: Color(0xFF21222D), fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20.0),
               const Text(
                 "Complaint Successfully Raised",
                 style: TextStyle(color: Color(0xFF21222D), fontSize: 20),
               ),
-              const SizedBox(height: 30.0),
+              const SizedBox(height: 40.0),
+
               const Text(
                 "We want you to sit back and relax. Resolving your complaint will be our top priority.",
                 style: TextStyle(
