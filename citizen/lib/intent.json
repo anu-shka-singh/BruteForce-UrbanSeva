@@ -1,0 +1,117 @@
+{"intents": [
+
+    {"tag": "greetings",
+     "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day", "Whats up","Hey"],
+     "responses": ["Hello!", "Good to see you again!", "Hi there, how can I help?"],
+     "context_set": ""
+    },
+
+    {"tag": "goodbye",
+     "patterns": ["Bye", "See you later", "Goodbye", "I am Leaving", "Have a Good day"],
+     "responses": ["Sad to see you go :(", "Talk to you later", "Goodbye!"],
+     "context_set": ""
+    },
+   
+   {"tag": "reporting_issue",
+    "patterns": ["How do I report an open pothole?", "Can I report a damaged road through this app?", "What should I do if I encounter water lodging in my locality?", "How can I report blocked drains in my area?"],
+    "responses": ["To report an open pothole, please click on the 'Plus' icon at the bottom right of your dashboard and provide the details.", "Yes, you can report damaged roads through the app. Simply submit the necessary information in the 'Report an Issue' section.", "You can report water lodging by accessing the 'Report an Issue' feature and describing the issue.", "Use the 'Report an Issue' option to report blocked drains. Fill in the details, and we'll take care of it."],
+    "context_set": ""
+   },
+   
+   {"tag": "government_alerts",
+    "patterns": ["Tell me more about the app's alert system for facility disruptions.", "How do I receive government alerts for facility disruptions?"],
+    "responses": ["The app provides real-time alerts about facility disruptions in your locality, ensuring you stay informed.", "You'll automatically receive government alerts in the app. Ensure you have notifications enabled."],
+    "context_set": ""
+   },
+   
+   {"tag": "viewing_issues",
+    "patterns": ["Can I view all reported issues on a map?", "How can I upvote or downvote issues raised by other users?"],
+    "responses": ["Yes, you can see all reported issues in your locality on the map. Visit the 'Local Map' section.", "In the issue details, you'll find options to upvote or downvote. Your feedback is valuable."],
+    "context_set": ""
+   },
+   
+   {"tag": "tracking_issues",
+    "patterns": ["Can I track the progress of the reported issues?", "What's the difference between upvoting and downvoting an issue?"],
+    "responses": ["Yes, you can track the status of your reported issues in the 'My Issues' section.", "Upvoting shows support for an issue, while downvoting indicates a lack of support."],
+    "context_set": ""
+   },
+   
+   {"tag": "user_privacy",
+    "patterns": ["Is my personal information safe in this app?", "How often are the issues resolved?"],
+    "responses": ["We prioritize user privacy. Your personal info is secure, and we follow strict data protection measures.", "Issue resolution times vary, but our goal is to address them as quickly as possible."],
+    "context_set": ""
+   },
+   
+   {"tag": "following_up",
+    "patterns": ["What do I do if my issue hasn't been resolved yet?", "How can I get more people to upvote my reported issue?"],
+    "responses": ["If an issue persists, you can follow up on its status in the 'My Issues' section.", "Share the issue with your community and encourage others to upvote for faster resolution."],
+    "context_set": ""
+   },
+   
+   {"tag": "app_features",
+    "patterns": ["What are the popular issues in my locality?", "Can I contact the local authorities through this app?"],
+    "responses": ["Check out the 'Top Issues' section to see the most popular issues in your area.", "While you can't directly contact authorities, we ensure your reported issues reach the right channels."],
+    "context_set": ""
+   },
+   {"tag": "using_chatbot",
+ "patterns": ["How do I interact with this chatbot?", "Tell me more about this chatbot's capabilities."],
+ "responses": ["You're interacting with the chatbot right now! I'm here to assist you with any questions or issues you have.", "This chatbot can help you with reporting issues, tracking their status, providing information, and more."],
+ "context_set": ""
+},
+
+{"tag": "notification_settings",
+ "patterns": ["How can I customize my notification settings?", "Can I choose which types of alerts I receive?"],
+ "responses": ["You can manage notification settings in the 'Profile' section. Customize the types of alerts you want to receive there.", "Yes, you have control over the types of alerts you receive. Choose your preferences in the 'Profile' section."],
+ "context_set": ""
+},
+
+{"tag": "user_feedback",
+ "patterns": ["How can I provide feedback about the app?", "Do you welcome suggestions for improvement?"],
+ "responses": ["We value your feedback! You can provide it in the 'Feedback' section. We welcome suggestions for enhancing the app.", "Feel free to share your thoughts in the 'Feedback' section. Your input helps us improve."],
+ "context_set": ""
+},
+
+{"tag": "reporting_accuracy",
+ "patterns": ["How accurate are the issue reports in this app?", "Can I trust the information provided by other users?"],
+ "responses": ["We aim for accuracy, but it's essential to verify the information independently. Our community's reports are valuable.", "While we strive for accuracy, always use your discretion and verify information independently."],
+ "context_set": ""
+},
+
+{"tag": "community_support",
+ "patterns": ["Is there a community support system in place?", "How can I connect with other users in my locality?"],
+ "responses": ["Yes, we have a community support network. You can connect with users through the 'Community' section.", "You can connect with fellow users in your area through the 'Community' section. Together, we make our locality better."],
+ "context_set": ""
+},
+
+{"tag": "app_updates",
+ "patterns": ["How often are app updates released?", "Where can I find information about the latest app updates?"],
+ "responses": ["We regularly release updates to enhance your experience. Find information about the latest updates in the 'About' section.", "We work on frequent updates to improve the app. Check the 'About' section for the latest update details."],
+ "context_set": ""
+},
+
+{"tag": "user_authentication",
+ "patterns": ["Is user authentication required to use the app?", "Do I need to create an account to report issues?"],
+ "responses": ["While user accounts are encouraged, you can use some features without authentication. Reporting issues may require an account for tracking purposes.", "You can use the app without authentication, but creating an account is recommended for a more personalized experience, especially for reporting issues."],
+ "context_set": ""
+},
+
+{"tag": "data_usage",
+ "patterns": ["How much data does this app consume?", "Do I need a stable internet connection to use the app?"],
+ "responses": ["The app is designed to be data-efficient. You can use it with a stable or intermittent internet connection.", "We've optimized the app for data efficiency, and it works well with both stable and intermittent internet connections."],
+ "context_set": ""
+},
+
+{"tag": "user_participation",
+ "patterns": ["How can I actively participate in my community through this app?", "What can I do to help improve my locality?"],
+ "responses": ["You can actively participate by reporting issues, upvoting important problems, and engaging with the local community in the 'Community' section.", "Help improve your locality by reporting issues, upvoting problems that matter, and connecting with your community members through the 'Community' section."],
+ "context_set": ""
+},
+
+{"tag": "chatbot_assistance",
+ "patterns": ["Can the chatbot assist me with navigation within the app?", "How can I get help with using specific features?"],
+ "responses": ["Yes, the chatbot can help you navigate the app and provide information about its features. Just ask for assistance!", "Feel free to ask the chatbot for assistance with navigating the app or using specific features. We're here to guide you."],
+ "context_set": ""
+}
+   
+]
+}
