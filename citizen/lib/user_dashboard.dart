@@ -88,7 +88,11 @@ class DashboardState extends State<Dashboard> {
     return await Geolocator.getCurrentPosition();
   }
 
-  List<bool> completedTasks = [true, false, false, false, false];
+  List<List<bool>> completedTasks = [
+    [true, true, true, true, false],
+    [true, true, false, false, false],
+    [true, true, true, false, false]
+  ];
   final List<Color> taskColors = [
     const Color.fromARGB(255, 255, 255, 255),
     const Color.fromARGB(255, 255, 255, 255),
@@ -108,12 +112,6 @@ class DashboardState extends State<Dashboard> {
     'Maharaja Roaj, Tilak Nagar',
     '3 Block, Street 10, Tagore Garden',
   ];
-
-  void _onTaskCompleted(int index) {
-    setState(() {
-      completedTasks[index] = !completedTasks[index];
-    });
-  }
 
   void _onItemTapped(int index) {
     if (index == 0) {
@@ -340,8 +338,10 @@ class DashboardState extends State<Dashboard> {
                               width: 10,
                             ),
                             Column(
-                              children:
-                                  completedTasks.asMap().entries.map((entry) {
+                              children: completedTasks[index]
+                                  .asMap()
+                                  .entries
+                                  .map((entry) {
                                 final taskIndex = entry.key;
                                 final completed = entry.value;
                                 return Column(
