@@ -19,41 +19,19 @@ class Dashboard extends StatefulWidget {
   DashboardState createState() => DashboardState();
 }
 
-Future<Position> _getCurrentLocation() async {
-  bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!serviceEnabled) {
-    return Future.error('Location service is OFF');
-  }
-  LocationPermission permission = await Geolocator.checkPermission();
-  if (permission == LocationPermission.denied) {
-    permission = await Geolocator.requestPermission();
-
-    if (permission == LocationPermission.denied) {
-      return Future.error('Location permission is denied');
-    }
-  }
-
-  if (permission == LocationPermission.deniedForever) {
-    return Future.error('Location permission is permanently denied');
-  }
-
-  return await Geolocator.getCurrentPosition();
-}
-
 class DashboardState extends State<Dashboard> {
   Position? currentLocation;
   String loc = "Loading..";
-  String name="";
+  String name = "";
 
   @override
   void initState() {
     super.initState();
+    name = widget.user;
     _getCurrentLocation().then((position) {
       setState(() {
-        name=widget.user;
         currentLocation = position;
         reverseGeocode();
-
       });
       _livelocation();
     }).catchError((error) {
@@ -147,12 +125,14 @@ class DashboardState extends State<Dashboard> {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ProfileScreen(user: widget.user,)),
+            builder: (context) => ProfileScreen(
+                  user: widget.user,
+                )),
       );
     }
   }
 
-  void reverseGeocode() async {
+  Future<String> reverseGeocode() async {
     var latitude = currentLocation?.latitude;
     var longitude = currentLocation?.longitude;
     final url =
@@ -165,12 +145,13 @@ class DashboardState extends State<Dashboard> {
         final data = json.decode(response.body);
 
         if (data.containsKey('display_name')) {
-          loc = data['display_name'];
+          return data['display_name'];
         }
       }
     } catch (e) {
       print('Error: $e');
     }
+    return 'Loading';
   }
 
   @override
@@ -232,7 +213,7 @@ class DashboardState extends State<Dashboard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                   name,
+                    name,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

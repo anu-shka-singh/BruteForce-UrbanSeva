@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dashboard/const.dart';
 import 'package:flutter_dashboard/pages/home/splash.dart';
 import 'package:flutter_dashboard/pages/home/user_provider.dart';
-import 'package:flutter_dashboard/pages/login.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-      ChangeNotifierProvider(
-        create: (context) => UserProvider(),
-        child: MyApp(),
-      ),
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: MyApp(),
+    ),
   );
 }
 
