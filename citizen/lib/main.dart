@@ -1,4 +1,4 @@
-//import 'package:complaint_app/splash.dart';
+import 'package:complaint_app/splash.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,11 +17,5 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return Scaffold();
   }
 }
