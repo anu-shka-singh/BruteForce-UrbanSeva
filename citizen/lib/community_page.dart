@@ -1,5 +1,5 @@
+import 'package:citizen/profile.dart';
 import 'package:flutter/material.dart';
-
 import 'chatbot_screen.dart';
 import 'user_dashboard.dart';
 
@@ -10,29 +10,36 @@ class Communities extends StatefulWidget {
   @override
   State<Communities> createState() => CommunitiesState();
 }
+class PostState {
+  int selectedLike = 0;
+  int selectedDislike = 0;
+  String comment = "";
+}
 
 class CommunitiesState extends State<Communities> {
+  List<PostState> postStates = List.generate(2, (index) => PostState());
+
   int selectedLike = 0;
   int selectedDislike = 0;
   String comment = "";
 
-  void onDownvote() {
+  void onDownvote(int index) {
     setState(() {
-      selectedLike = 1;
-      selectedDislike = 0; // Reset the dislike state
+      postStates[index].selectedLike = 0;
+      postStates[index].selectedDislike = 1;
     });
   }
 
-  void onUpvote() {
+  void onUpvote(int index) {
     setState(() {
-      selectedDislike = 1; // Reset the like state
-      selectedLike = 0;
+      postStates[index].selectedLike = 1;
+      postStates[index].selectedDislike = 0;
     });
   }
 
-  void onComment(String value) {
+  void onComment(int index, String value) {
     setState(() {
-      comment = value;
+      postStates[index].comment = value;
     });
   }
 
@@ -64,7 +71,7 @@ class CommunitiesState extends State<Communities> {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ChatBotScreen(
+            builder: (context) => ProfileScreen(
               user: widget.user,
             )),
       );
@@ -141,30 +148,32 @@ class CommunitiesState extends State<Communities> {
                 ),
               ),
               MyPostUI(
+                img: "images/ppp.jpg",
                 name: "Manya Singh",
                 postID: "#127",
                 content:
                     "Experiencing frequent power cuts in my area. Urgently need assistance to address the issue.",
                 likes: 20,
-                selectedDislike: selectedLike,
-                selectedLike: selectedDislike,
-                onUpvote: onUpvote,
-                onDownvote: onDownvote,
-                comment: comment,
-                onComment: onComment,
+                selectedLike: postStates[0].selectedLike,
+                selectedDislike: postStates[0].selectedDislike,
+                onUpvote: () => onUpvote(0),
+                onDownvote: () => onDownvote(0),
+                comment: postStates[0].comment,
+                onComment: (value) => onComment(0, value),
               ),
               MyPostUI(
+                img: "images/pfp.jpeg",
                 name: "Harshita Arora",
                 postID: "#337",
                 content:
                     "Waterlogging is severe in my neighborhood, affecting daily life. Requesting immediate attention to resolve the issue",
-                likes: 20,
-                selectedDislike: selectedLike,
-                selectedLike: selectedDislike,
-                onUpvote: onUpvote,
-                onDownvote: onDownvote,
-                comment: comment,
-                onComment: onComment,
+                likes: 50,
+                selectedLike: postStates[1].selectedLike,
+                selectedDislike: postStates[1].selectedDislike,
+                onUpvote: () => onUpvote(1),
+                onDownvote: () => onDownvote(1),
+                comment: postStates[1].comment,
+                onComment: (value) => onComment(1, value),
               ),
             ],
           ),
@@ -211,7 +220,9 @@ class CommunitiesState extends State<Communities> {
   }
 }
 
+
 class MyPostUI extends StatelessWidget {
+  final String img;
   final String name;
   final String postID;
   final String content;
@@ -226,6 +237,7 @@ class MyPostUI extends StatelessWidget {
 
   const MyPostUI({
     super.key,
+    required this.img,
     required this.name,
     required this.postID,
     required this.content,
@@ -252,10 +264,10 @@ class MyPostUI extends StatelessWidget {
           children: [
             Row(
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 30,
                   backgroundImage: AssetImage(
-                      'images/pfp.jpeg'), // Replace with your image path
+                      img), // Replace with your image path
                 ),
                 const SizedBox(width: 15),
                 Column(
@@ -269,7 +281,7 @@ class MyPostUI extends StatelessWidget {
                       ),
                     ),
                     const Text(
-                      "12th Oct at 9:40PM",
+                      "12th Oct",
                       style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                   ],

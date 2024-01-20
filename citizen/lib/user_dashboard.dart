@@ -43,14 +43,17 @@ Future<Position> _getCurrentLocation() async {
 class DashboardState extends State<Dashboard> {
   Position? currentLocation;
   String loc = "Loading..";
+  String name="";
 
   @override
   void initState() {
     super.initState();
     _getCurrentLocation().then((position) {
       setState(() {
+        name=widget.user;
         currentLocation = position;
         reverseGeocode();
+
       });
       _livelocation();
     }).catchError((error) {
@@ -229,7 +232,7 @@ class DashboardState extends State<Dashboard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.user,
+                   name,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
