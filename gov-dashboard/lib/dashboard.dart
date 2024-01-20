@@ -14,7 +14,7 @@ class DashBoard extends StatelessWidget {
     return Scaffold(
         key: _scaffoldKey,
         drawer: !Responsive.isDesktop(context)
-            ? SizedBox(width: 250, child: Menu(scaffoldKey: _scaffoldKey))
+            ? SizedBox(width: 250, child: Menu(scaffoldKey: _scaffoldKey, ))
             : null,
         endDrawer: Responsive.isMobile(context)
             ? SizedBox(

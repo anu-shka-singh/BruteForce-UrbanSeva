@@ -7,11 +7,6 @@ import '../dbHelper/mongodb.dart';
 import '../widgets/menu.dart';
 import '../../dbHelper/datamodels.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: AddAlert(),
-  ));
-}
 
 class AddAlert extends StatefulWidget {
   const AddAlert({Key? key}) : super(key: key);

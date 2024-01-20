@@ -22,6 +22,7 @@ dependencies:
   http: ^1.1.0
   intl: ^0.18.1
   mongo_dart: ^0.9.3
+  provider: ^6.1.1
 
 dev_dependencies:
   flutter_test:

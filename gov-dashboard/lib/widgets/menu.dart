@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard/dashboard.dart';
 import 'package:flutter_dashboard/pages/addAlert.dart';
+import 'package:flutter_dashboard/pages/profile.dart';
 import '../pages/login.dart';
 
 class Menu extends StatefulWidget {
@@ -70,6 +71,10 @@ class _MenuState extends State<Menu> {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const AddAlert(),
                         ));
+                      } else if (i == 1) {
+                        selected = i;
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ProfileScreen()));
                       } else if (i == 0) {
                         selected = i;
                         Navigator.of(context).push(MaterialPageRoute(

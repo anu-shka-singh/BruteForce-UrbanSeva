@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard/const.dart';
 import 'package:flutter_dashboard/pages/home/splash.dart';
+import 'package:flutter_dashboard/pages/home/user_provider.dart';
 import 'package:flutter_dashboard/pages/login.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+      ChangeNotifierProvider(
+        create: (context) => UserProvider(),
+        child: MyApp(),
+      ),
+  );
 }
 
 class MyApp extends StatelessWidget {

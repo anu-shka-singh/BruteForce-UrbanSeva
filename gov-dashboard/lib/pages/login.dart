@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard/dashboard.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo_dart;
+import 'package:provider/provider.dart';
 import '../../dbHelper/mongodb.dart';
 import '../../dbHelper/constant.dart';
+import 'home/user_provider.dart';
 
 final TextEditingController _passwordTextController = TextEditingController();
 final TextEditingController _emailTextController = TextEditingController();
@@ -71,6 +73,7 @@ class LoginPage extends StatelessWidget {
                       await doesUserExists(email);
                       if (userExists) {
                         String userEmail = email;
+                        Provider.of<UserProvider>(context, listen: false).setUserEmail(userEmail);
                         while (userData['pswd'] != password) {
                           await showDialog(
                             context: context,
