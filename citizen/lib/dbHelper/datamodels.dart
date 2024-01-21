@@ -22,12 +22,13 @@ class Complaint {
   final String probText;
   final String problemDesc;
   final String base64Image;
+  final int resolveStatus;
   final int isUrgent;
 
-  Complaint({required this.problemType, required this.probText, required this.problemDesc, required this.base64Image, required this.isUrgent});
+  Complaint({required this.problemType, required this.probText, required this.problemDesc, required this.base64Image, required this.resolveStatus, required this.isUrgent});
 
   factory Complaint.fromJson(Map<String, dynamic> json) => 
-    Complaint(problemType: json['problemType'], probText: json['probText'], problemDesc: json['problemDesc'], base64Image: json['base64Image'], isUrgent: json['isUrgent']);
+    Complaint(problemType: json['problemType'], probText: json['probText'], problemDesc: json['problemDesc'], base64Image: json['base64Image'], resolveStatus: json['resolveStatus'], isUrgent: json['isUrgent']);
 
-  Map<String ,dynamic> toJson() => {'problemType': problemType, 'probText': probText, 'problemDesc': problemDesc, 'base64Image': base64Image, 'isUrgent': isUrgent};
+  Map<String ,dynamic> toJson() => {'problemType': problemType, 'probText': probText, 'problemDesc': problemDesc, 'base64Image': base64Image, 'resolveStatus': resolveStatus, 'isUrgent': isUrgent};
 }

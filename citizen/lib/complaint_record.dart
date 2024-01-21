@@ -476,6 +476,7 @@ class _TakeComplainState extends State<TakeComplain> {
                                   probText: problems[widget.index][selectedRadio],
                                   problemDesc: probDesc,
                                   base64Image: base64Image,
+                                  resolveStatus: 0,
                                   isUrgent: isUrgent);
                               await MongoDatabase.db
                                   .collection(COMPLAINT_COLLECTION)

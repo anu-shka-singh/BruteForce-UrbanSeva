@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dbHelper/mongodb.dart';
 import 'profile.dart';
 import 'package:http/http.dart' as http;
 import 'community_page.dart';
@@ -22,6 +23,14 @@ class Dashboard extends StatefulWidget {
 class DashboardState extends State<Dashboard> {
   Position? currentLocation;
   String name = "";
+  List<Map<String, dynamic>> Complaints = [];
+
+  Future<void> fetchComplaints() async {
+    final collection = MongoDatabase.db.collection('Complaints');
+    final cursor = await collection.find();
+    Complaints = await cursor.toList();
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -36,6 +45,7 @@ class DashboardState extends State<Dashboard> {
     }).catchError((error) {
       print(error); // Handle location errors here
     });
+    fetchComplaints();
   }
 
   void _livelocation() {
@@ -74,9 +84,11 @@ class DashboardState extends State<Dashboard> {
   }
 
   List<List<bool>> completedTasks = [
-    [true, true, true, true, false],
+    [true, false, false, false, false],
     [true, true, false, false, false],
-    [true, true, true, false, false]
+    [true, true, true, false, false],
+    [true, true, true, true, false],
+    [true, true, true, true, true],
   ];
   final List<Color> taskColors = [
     const Color.fromARGB(255, 255, 255, 255),
@@ -86,17 +98,17 @@ class DashboardState extends State<Dashboard> {
     const Color.fromARGB(255, 251, 189, 220),
   ];
 
-  List<String> issue = [
-    'Open Pothole',
-    'Water Lodging',
-    'Blocked Drains',
-  ];
+  // List<String> issue = [
+  //   'Open Pothole',
+  //   'Water Lodging',
+  //   'Blocked Drains',
+  // ];
 
-  List<String> sub = [
-    'A Block, Street 14, Janakpuri West',
-    'Maharaja Roaj, Tilak Nagar',
-    '3 Block, Street 10, Tagore Garden',
-  ];
+  // List<String> sub = [
+  //   'A Block, Street 14, Janakpuri West',
+  //   'Maharaja Roaj, Tilak Nagar',
+  //   '3 Block, Street 10, Tagore Garden',
+  // ];
 
   void _onItemTapped(int index) {
     if (index == 0) {
@@ -104,8 +116,8 @@ class DashboardState extends State<Dashboard> {
         context,
         MaterialPageRoute(
             builder: (context) => Dashboard(
-              user: widget.user,
-            )),
+                  user: widget.user,
+                )),
       );
     } else if (index == 1) {
       Navigator.push(
@@ -117,8 +129,8 @@ class DashboardState extends State<Dashboard> {
         context,
         MaterialPageRoute(
             builder: (context) => ChatBotScreen(
-              user: widget.user,
-            )),
+                  user: widget.user,
+                )),
       );
     } else if (index == 3) {
       Navigator.push(
@@ -127,7 +139,6 @@ class DashboardState extends State<Dashboard> {
             builder: (context) => ProfileScreen(
                   user: widget.user,
                 )),
-
       );
     }
   }
@@ -293,144 +304,45 @@ class DashboardState extends State<Dashboard> {
                           "See various issues in your locality",
                           style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 20),
-                      ],
                     ),
+                    const SizedBox(height: 20),
                   ],
                 ),
-              ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "My Issues",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: issue.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        color: taskColors[index],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        elevation: 2,
-                        margin: const EdgeInsets.all(12.0),
-                        child: Column(
-                          children: [
-                            ListTile(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              contentPadding: const EdgeInsets.all(16.0),
-                              title: Text(
-                                issue[index],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              subtitle: Text(
-                                sub[index],
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 3, 31, 54),
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              tileColor: taskColors[index],
-                            ),
-                            Row(
-                              children: [
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  children: completedTasks[index]
-                                      .asMap()
-                                      .entries
-                                      .map((entry) {
-                                    final taskIndex = entry.key;
-                                    final completed = entry.value;
-                                    return Column(
-                                      children: [
-                                        Container(
-                                          width: 16,
-                                          height: 8,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: completed
-                                                ? Colors.green
-                                                : Colors.red,
-                                          ),
-                                        ),
-                                        if (taskIndex <
-                                            completedTasks[index].length - 1)
-                                          Container(
-                                            width: 3,
-                                            height: 29,
-                                            color: completed
-                                                ? Colors.green
-                                                : Colors.grey,
-                                          ),
-                                      ],
-                                    );
-                                  }).toList(),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Issue Registered",
-                                        style: TextStyle(fontSize: 14)),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Text("Forwarded to authorities",
-                                        style: TextStyle(fontSize: 14)),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Text("Action Initiated",
-                                        style: TextStyle(fontSize: 14)),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Text("Action in Progress",
-                                        style: TextStyle(fontSize: 14)),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Text("Resolved",
-                                        style: TextStyle(fontSize: 14)),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ],
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "My Issues",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            )
-          ])),
+              const SizedBox(height: 10),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: Complaints.length,
+                itemBuilder: (context, index) {
+                  final complaint = Complaints[index];
+                  return ProgressCard(
+                    probType: complaint['problemType'],
+                    probText: complaint['probText'],
+                    resolveStatus: complaint['resolveStatus'],
+                    completedTasks: completedTasks,
+                  );
+                },
+              ),
+            ],
+          ),
+        )
+      ])),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTapped,
         items: const [
@@ -489,6 +401,120 @@ class DashboardState extends State<Dashboard> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+    );
+  }
+}
+
+class ProgressCard extends StatelessWidget {
+  final String probType;
+  final String probText;
+  final int resolveStatus;
+  final List<List<bool>> completedTasks;
+
+  const ProgressCard({
+    super.key,
+    required this.probType,
+    required this.probText,
+    required this.resolveStatus,
+    required this.completedTasks,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      elevation: 2,
+      margin: const EdgeInsets.all(12.0),
+      child: Column(
+        children: [
+          ListTile(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            contentPadding: const EdgeInsets.all(16.0),
+            title: Text(
+              probType,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            subtitle: Text(
+              probText,
+              style: const TextStyle(
+                color: Color.fromARGB(255, 3, 31, 54),
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
+              ),
+            ),
+            tileColor: Colors.white,
+          ),
+          Row(
+            children: [
+              const SizedBox(
+                width: 10,
+              ),
+              Column(
+                children:
+                    completedTasks[resolveStatus].asMap().entries.map((entry) {
+                  final taskIndex = entry.key;
+                  final completed = entry.value;
+                  return Column(
+                    children: [
+                      Container(
+                        width: 16,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: completed ? Colors.green : Colors.red,
+                        ),
+                      ),
+                      if (taskIndex < completedTasks[resolveStatus].length - 1)
+                        Container(
+                          width: 3,
+                          height: 29,
+                          color: completed ? Colors.green : Colors.grey,
+                        ),
+                    ],
+                  );
+                }).toList(),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Issue Registered", style: TextStyle(fontSize: 14)),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text("Forwarded to authorities",
+                      style: TextStyle(fontSize: 14)),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text("Action Initiated", style: TextStyle(fontSize: 14)),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text("Action in Progress", style: TextStyle(fontSize: 14)),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text("Resolved", style: TextStyle(fontSize: 14)),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          )
+        ],
+      ),
     );
   }
 }
