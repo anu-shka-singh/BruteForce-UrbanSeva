@@ -21,7 +21,6 @@ class Dashboard extends StatefulWidget {
 
 class DashboardState extends State<Dashboard> {
   Position? currentLocation;
-  String loc = "Loading..";
   String name = "";
 
   @override
@@ -31,7 +30,7 @@ class DashboardState extends State<Dashboard> {
     _getCurrentLocation().then((position) {
       setState(() {
         currentLocation = position;
-        reverseGeocode();
+        //reverseGeocode();
       });
       _livelocation();
     }).catchError((error) {
@@ -133,27 +132,27 @@ class DashboardState extends State<Dashboard> {
     }
   }
 
-  void reverseGeocode() async {
-    var latitude = currentLocation?.latitude;
-    var longitude = currentLocation?.longitude;
-    final url =
-        'https://nominatim.openstreetmap.org/reverse?format=json&lat=$latitude&lon=$longitude';
-
-    try {
-      final response = await http.get(Uri.parse(url));
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-
-        if (data.containsKey('display_name')) {
-          loc= data['display_name'];
-        }
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
-    //return 'Loading';
-  }
+  // Future<void> reverseGeocode() async {
+  //   var latitude = currentLocation?.latitude;
+  //   var longitude = currentLocation?.longitude;
+  //   final url =
+  //       'https://nominatim.openstreetmap.org/reverse?format=json&lat=$latitude&lon=$longitude';
+  //
+  //   try {
+  //     final response = await http.get(Uri.parse(url));
+  //
+  //     if (response.statusCode == 200) {
+  //       final data = json.decode(response.body);
+  //
+  //       if (data.containsKey('display_name')) {
+  //         loc= data['display_name'];
+  //       }
+  //     }
+  //   } catch (e) {
+  //     print('Error: $e');
+  //   }
+  //   //return 'Loading';
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -222,8 +221,9 @@ class DashboardState extends State<Dashboard> {
                           color: Colors.white,
                         ),
                       ),
+
                       Text(
-                        loc.length > 30 ? '${loc.substring(0, 30)}...' : loc,
+                        'Latitude: ${currentLocation?.latitude}\nLongitude: ${currentLocation?.longitude}',
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
