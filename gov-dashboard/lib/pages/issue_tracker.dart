@@ -378,7 +378,30 @@ class _IssueTrackerState extends State<IssueTracker> {
                         ),
                       ),
                     ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 33.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Add your button click logic here
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                            EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                          ),
+                        ),
+                        child: Text('Delete this Issue',
+                          style: TextStyle(
+                          fontSize: 18.0,
+                        ),
+                        ),
+                      ),
+                    ),
+                    ),
                   ],
+
                 ),
               ),
             ),

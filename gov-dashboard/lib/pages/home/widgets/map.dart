@@ -74,7 +74,7 @@ class _ProblemMapState extends State<ProblemMap> {
       // ),
       child: FlutterMap(
         options: const MapOptions(
-            initialZoom: 13, initialCenter: LatLng(28.6465, 77.1169)),
+            initialZoom: 13, initialCenter: LatLng(28.605147,77.052512)),
         children: [
           // Layer that adds the map
           TileLayer(
@@ -87,7 +87,7 @@ class _ProblemMapState extends State<ProblemMap> {
             markers: [
               // First Marker
               Marker(
-                point: const LatLng(28.645026, 77.111367),
+                point: const LatLng(28.581181, 77.050894),
                 width: 80,
                 height: 80,
                 child: IconButton(
@@ -109,7 +109,7 @@ class _ProblemMapState extends State<ProblemMap> {
                 ),
               ),
               Marker(
-                point: const LatLng(28.652257, 77.105014),
+                point: const LatLng(28.581184, 77.107332),
                 width: 80,
                 height: 80,
                 child: IconButton(
@@ -174,6 +174,17 @@ class _ProblemMapState extends State<ProblemMap> {
                   iconSize: 31,
                 ),
               ),
+              Marker(
+                point: const LatLng(28.609066,77.022966),
+                width: 80,
+                height: 80,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.water_drop),
+                  color: Colors.blue,
+                  iconSize: 31,
+                ),
+              ),
               // Second Marker
               Marker(
                 point: const LatLng(28.635986, 77.112825),
@@ -187,7 +198,7 @@ class _ProblemMapState extends State<ProblemMap> {
                 ),
               ),
               Marker(
-                point: const LatLng(28.630185, 77.123206),
+                point: const LatLng(28.565051, 76.999943),
                 width: 80,
                 height: 80,
                 child: IconButton(
@@ -242,7 +253,7 @@ class _ProblemMapState extends State<ProblemMap> {
                 ),
               ),
               Marker(
-                point: const LatLng(28.672666, 77.061292),
+                point: const LatLng(28.619313, 77.024690),
                 width: 80,
                 height: 80,
                 child: IconButton(
@@ -264,7 +275,7 @@ class _ProblemMapState extends State<ProblemMap> {
                 ),
               ),
               Marker(
-                point: const LatLng(28.608336, 77.041114),
+                point: const LatLng(28.608336, 77.081364),
                 width: 80,
                 height: 80,
                 child: IconButton(
@@ -297,7 +308,7 @@ class _ProblemMapState extends State<ProblemMap> {
                 ),
               ),
               Marker(
-                point: const LatLng(28.633349, 77.090351),
+                point: const LatLng(28.608161, 77.034653),
                 width: 80,
                 height: 80,
                 child: IconButton(
@@ -352,7 +363,40 @@ class _ProblemMapState extends State<ProblemMap> {
                 ),
               ),
               Marker(
-                point: const LatLng(28.639225, 77.073515),
+                point: const LatLng(28.574398, 77.082052),
+                width: 80,
+                height: 80,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.flash_on),
+                  color: Colors.green,
+                  iconSize: 31,
+                ),
+              ),
+              Marker(
+                point: const LatLng(28.574398, 77.082052),
+                width: 80,
+                height: 80,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.flash_on),
+                  color: Colors.green,
+                  iconSize: 31,
+                ),
+              ),
+              Marker(
+                point: const LatLng(28.630594,77.042374),
+                width: 80,
+                height: 80,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.flash_on),
+                  color: Colors.green,
+                  iconSize: 31,
+                ),
+              ),
+              Marker(
+                point: const LatLng(28.599119,77.069009),
                 width: 80,
                 height: 80,
                 child: IconButton(
