@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:flutter_dashboard/dashboard.dart';
 import 'package:flutter_dashboard/dbHelper/constant.dart';
 import 'package:intl/intl.dart';
 import '../dbHelper/mongodb.dart';
@@ -144,7 +145,10 @@ class _AddIssueState extends State<AddAlert> {
                           content: const Text('Alert Issued'),
                           actions: <Widget>[
                             TextButton(
-                              onPressed: () => Navigator.pop(context),
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DashBoard())),
                               child: const Text('OK'),
                             ),
                           ],
