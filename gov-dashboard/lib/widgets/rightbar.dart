@@ -1,5 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dashboard/pages/powerissue.dart';
+import 'package:flutter_dashboard/pages/sanitationissue.dart';
+import 'package:flutter_dashboard/pages/strayanimalissue.dart';
+import 'package:flutter_dashboard/pages/waterissue.dart';
 import 'package:flutter_dashboard/responsive.dart';
 
 import '../pages/roadissue.dart';
@@ -53,11 +57,11 @@ class Profile extends StatelessWidget {
               const Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ProfileTile(icon: Icons.directions_car, title: "Roads and Transportation"),
-                  ProfileTile(icon: Icons.opacity, title: "Water and Sewer"),
-                  ProfileTile(icon: Icons.power, title: "Electricity and Power"),
-                  ProfileTile(icon: Icons.delete, title: "Sanitation"),
-                  ProfileTile(icon: Icons.pets, title: "Stray Animal"),
+                  ProfileTile(icon: Icons.directions_car, title: "Roads and Transportation", widget: RoadTransportationPage(),),
+                  ProfileTile(icon: Icons.opacity, title: "Water and Sewer", widget: WaterSewerPage(),),
+                  ProfileTile(icon: Icons.power, title: "Electricity and Power", widget: ElectricityPowerPage(),),
+                  ProfileTile(icon: Icons.delete, title: "Sanitation", widget: SanitationPage(),),
+                  ProfileTile(icon: Icons.pets, title: "Stray Animal", widget: StrayAnimalsPage(),),
                 ],
               ),
             ],
@@ -174,8 +178,9 @@ class _Segment {
 class ProfileTile extends StatelessWidget {
   final IconData icon;
   final String title;
+  final Widget widget;
 
-  const ProfileTile({required this.icon, required this.title, Key? key})
+  const ProfileTile({required this.icon, required this.title, Key? key, required this.widget})
       : super(key: key);
 
   @override
@@ -183,7 +188,7 @@ class ProfileTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => RoadTransportationPage())); // Navigate to the issue page
+            builder: (context) => widget)); // Navigate to the issue page
       },
       child: Container(
         decoration: BoxDecoration(
