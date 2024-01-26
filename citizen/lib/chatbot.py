@@ -17,7 +17,7 @@ from tensorflow.python.framework import ops
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-with open ("lib\intent.json") as file:
+with open ("intent.json") as file:
   data=json.load(file)
 try:
   with open("data.pickle","rb") as f:

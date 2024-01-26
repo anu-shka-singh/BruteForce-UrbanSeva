@@ -43,7 +43,9 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   }
 
   Future<String> getResponse(String message) async {
+    print(message);
     String apiUrl = 'http://127.0.0.1:5000/api?input=$message';
+
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
