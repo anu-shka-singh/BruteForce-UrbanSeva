@@ -21,7 +21,7 @@ class UserProvider extends ChangeNotifier {
     try {
       // Check if the email is already registered
       final response = await http.get(
-      Uri.parse('http://localhost:3000/api/checkUser?email=$_userEmail'),
+      Uri.parse('https://node-server-us.onrender.com/api/checkUser?email=$_userEmail'),
     );
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);

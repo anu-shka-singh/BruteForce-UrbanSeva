@@ -167,7 +167,7 @@ class LoginPage extends StatelessWidget {
 Future<bool> doesUserExists(String email) async {
   try {
     final response = await http.get(
-      Uri.parse('http://localhost:3000/api/checkUser?email=$email'),
+      Uri.parse('https://node-server-us.onrender.com/api/checkUser?email=$email'),
     );
 
     // Check the response from the server
@@ -186,4 +186,3 @@ Future<bool> doesUserExists(String email) async {
     return false;
   }
 }
-

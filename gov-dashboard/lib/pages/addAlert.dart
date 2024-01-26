@@ -174,7 +174,7 @@ class _AddIssueState extends State<AddAlert> {
 Future<void> addAlert(Alert alert) async {
   try {
     final response = await http.post(
-      Uri.parse('http://localhost:3000/api/addAlert'),
+      Uri.parse('https://node-server-us.onrender.com/api/addAlert'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(alert.toJson()),
     );
