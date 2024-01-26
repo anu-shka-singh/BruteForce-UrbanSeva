@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -43,20 +42,28 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   }
 
   Future<String> getResponse(String message) async {
-    print(message);
-    String apiUrl = 'http://127.0.0.1:5000/api?input=$message';
+    try {
+      print(message);
+      String apiUrl = 'http://192.168.225.7:5000/api?input=$message';
 
-    final response = await http.get(Uri.parse(apiUrl));
+      final response = await http.get(Uri.parse(apiUrl));
 
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-      return jsonResponse['response'];
-    } else {
-      throw Exception('Failed to load response');
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        return jsonResponse['response'];
+      } else {
+        print("Request failed with status: ${response.statusCode}");
+        throw Exception('Failed to load response');
+      }
+    } catch (e) {
+      print("Error: $e");
+      throw Exception('Failed to make the request');
     }
   }
 
+
   Widget _buildMessage(Message message) {
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: Padding(
@@ -74,19 +81,21 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
             ),
             const SizedBox(height: 5), // Adjust spacing as needed
             Container(
+              constraints: BoxConstraints(
+                maxWidth: 250,
+              ),
               decoration: BoxDecoration(
                 color: message.isMe
-                    ? const Color(0xFF21222D)
-                    : const Color(0xFFA9DF21), // Change colors as desired
+                    ?  Color(0xFF21222D)
+                    :  Color(0xFFD3D3DA), // Change colors as desired
                 borderRadius: BorderRadius.circular(8),
               ),
               padding: const EdgeInsets.all(10),
               child: Text(
                 message.text,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
-                  // Adjust the font size as desired
-                  color: Colors.white, // Text color for the message
+                  color: message.isMe ? Colors.white : Color(0xFF21222D),
                 ),
               ),
             ),
@@ -96,27 +105,6 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
     );
   }
 
-  // void _onItemTapped(int index) {
-  //   if (index == 0) {
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //           builder: (context) => Dashboard(
-  //                 user: '',
-  //               )),
-  //     );
-  //   } else if (index == 1) {
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => const Communities()),
-  //     );
-  //   } else if (index == 2) {
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => const ChatBotScreen()),
-  //     );
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -166,32 +154,8 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
           )
         ],
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   onTap: _onItemTapped,
-      //   items: const [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(
-      //         Icons.home,
-      //         color: Color(0xFF21222D),
-      //       ),
-      //       label: 'Home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(
-      //         Icons.group,
-      //         color: Color(0xFF21222D),
-      //       ),
-      //       label: 'Community',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(
-      //         Icons.chat,
-      //         color: Color(0xFF21222D),
-      //       ),
-      //       label: 'Chat Bot',
-      //     ),
-      //   ],
-      // ),
+
+
     );
   }
 }

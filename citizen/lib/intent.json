@@ -14,13 +14,13 @@
    
    {"tag": "reporting_issue",
     "patterns": ["How do I report an open pothole?", "Can I report a damaged road through this app?", "What should I do if I encounter water lodging in my locality?", "How can I report blocked drains in my area?"],
-    "responses": ["To report an open pothole, please click on the 'Plus' icon at the bottom right of your dashboard and provide the details.", "Yes, you can report damaged roads through the app. Simply submit the necessary information in the 'Report an Issue' section.", "You can report water lodging by accessing the 'Report an Issue' feature and describing the issue.", "Use the 'Report an Issue' option to report blocked drains. Fill in the details, and we'll take care of it."],
+    "responses": ["To report, please click on the 'Plus' icon at the bottom right of your dashboard and provide the details.", "Yes, you can report through the app.Simply submit the necessary information in the 'Report an Issue' section.", "You can report issue by accessing the 'Report an Issue' feature and describing the issue.", "Use the 'Report an Issue' option to report.Fill in the details, and we'll take care of it."],
     "context_set": ""
    },
    
    {"tag": "government_alerts",
-    "patterns": ["Tell me more about the app's alert system for facility disruptions.", "How do I receive government alerts for facility disruptions?"],
-    "responses": ["The app provides real-time alerts about facility disruptions in your locality, ensuring you stay informed.", "You'll automatically receive government alerts in the app. Ensure you have notifications enabled."],
+    "patterns": ["What is government alert system","Tell me more about the app's alert system for facility disruptions.", "How do I receive government alerts for facility disruptions?", "what are government alerts?"],
+    "responses": ["The app provides real-time alerts about facility disruptions in your locality, ensuring you stay informed.", "You'll automatically receive government alerts in the app which will tell you about the upcoming disruptions in your locality."],
     "context_set": ""
    },
    
@@ -31,8 +31,8 @@
    },
    
    {"tag": "tracking_issues",
-    "patterns": ["Can I track the progress of the reported issues?", "What's the difference between upvoting and downvoting an issue?"],
-    "responses": ["Yes, you can track the status of your reported issues in the 'My Issues' section.", "Upvoting shows support for an issue, while downvoting indicates a lack of support."],
+    "patterns": ["Can I track the progress of the reported issues?", "Where can I see updates of my issue?", "how can i track my issue", "where can i track my issue"],
+    "responses": ["You can track the status of your reported issues in the 'My Issues' section."],
     "context_set": ""
    },
    
@@ -43,8 +43,8 @@
    },
    
    {"tag": "following_up",
-    "patterns": ["What do I do if my issue hasn't been resolved yet?", "How can I get more people to upvote my reported issue?"],
-    "responses": ["If an issue persists, you can follow up on its status in the 'My Issues' section.", "Share the issue with your community and encourage others to upvote for faster resolution."],
+    "patterns": ["my issues are still unresolved","why is my issue unresolved?","What do I do if my issue hasn't been resolved yet?"],
+    "responses": ["If an issue persists, you can follow up on its status in the 'My Issues' section.It will be resolved soon.", "Typically, it takes around 3 to 4 weeks for the problem to be resolved. Rest assured, the issue will be resolved soon"],
     "context_set": ""
    },
    
@@ -53,23 +53,6 @@
     "responses": ["Check out the 'Top Issues' section to see the most popular issues in your area.", "While you can't directly contact authorities, we ensure your reported issues reach the right channels."],
     "context_set": ""
    },
-   {"tag": "using_chatbot",
- "patterns": ["How do I interact with this chatbot?", "Tell me more about this chatbot's capabilities."],
- "responses": ["You're interacting with the chatbot right now! I'm here to assist you with any questions or issues you have.", "This chatbot can help you with reporting issues, tracking their status, providing information, and more."],
- "context_set": ""
-},
-
-{"tag": "notification_settings",
- "patterns": ["How can I customize my notification settings?", "Can I choose which types of alerts I receive?"],
- "responses": ["You can manage notification settings in the 'Profile' section. Customize the types of alerts you want to receive there.", "Yes, you have control over the types of alerts you receive. Choose your preferences in the 'Profile' section."],
- "context_set": ""
-},
-
-{"tag": "user_feedback",
- "patterns": ["How can I provide feedback about the app?", "Do you welcome suggestions for improvement?"],
- "responses": ["We value your feedback! You can provide it in the 'Feedback' section. We welcome suggestions for enhancing the app.", "Feel free to share your thoughts in the 'Feedback' section. Your input helps us improve."],
- "context_set": ""
-},
 
 {"tag": "reporting_accuracy",
  "patterns": ["How accurate are the issue reports in this app?", "Can I trust the information provided by other users?"],
@@ -83,11 +66,6 @@
  "context_set": ""
 },
 
-{"tag": "app_updates",
- "patterns": ["How often are app updates released?", "Where can I find information about the latest app updates?"],
- "responses": ["We regularly release updates to enhance your experience. Find information about the latest updates in the 'About' section.", "We work on frequent updates to improve the app. Check the 'About' section for the latest update details."],
- "context_set": ""
-},
 
 {"tag": "user_authentication",
  "patterns": ["Is user authentication required to use the app?", "Do I need to create an account to report issues?"],
@@ -109,7 +87,7 @@
 
 {"tag": "chatbot_assistance",
  "patterns": ["Can the chatbot assist me with navigation within the app?", "How can I get help with using specific features?"],
- "responses": ["Yes, the chatbot can help you navigate the app and provide information about its features. Just ask for assistance!", "Feel free to ask the chatbot for assistance with navigating the app or using specific features. We're here to guide you."],
+ "responses": ["Yes, the chatbot can help you navigate the app and provide information about its features. Just ask for assistance!", "Feel free to ask the chatbot for assistance with navigating the app or using specific features.We're here to guide you."],
  "context_set": ""
 }
    
