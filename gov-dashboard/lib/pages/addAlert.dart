@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import '../dbHelper/mongodb.dart';
 import '../widgets/menu.dart';
 import '../../dbHelper/datamodels.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class AddAlert extends StatefulWidget {
   const AddAlert({Key? key}) : super(key: key);
@@ -126,16 +128,14 @@ class _AddIssueState extends State<AddAlert> {
                         auth: selectedCategory,
                         date: selectedDate != null
                             ? DateFormat("yyyy-MM-dd").format(selectedDate!)
-                            : '',
+                            : '', 
                         desc:
                             '${detailsController.text} due to ${reasonController.text} in ${locationController.text} (${pincodeController.text})',
                         time: '${DateTime.now().hour}:${DateTime.now().minute}',
                       );
 
                       // Insert the issue into the database
-                      await MongoDatabase.db
-                          .collection(ALERT_COLLECTION)
-                          .insert(alert.toJson());
+                      await addAlert(alert);
 
                       // ignore: use_build_context_synchronously
                       showDialog(
@@ -168,5 +168,24 @@ class _AddIssueState extends State<AddAlert> {
         ],
       ),
     );
+  }
+}
+
+Future<void> addAlert(Alert alert) async {
+  try {
+    final response = await http.post(
+      Uri.parse('http://localhost:3000/api/addAlert'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(alert.toJson()),
+    );
+
+    if (response.statusCode == 201) {
+      print('Alert inserted successfully');
+    } else {
+      print('Failed to insert alert. Status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }
+  } catch (e) {
+    print('Error: $e');
   }
 }

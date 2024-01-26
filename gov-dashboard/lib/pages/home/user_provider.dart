@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import '../../dbHelper/constant.dart';
 import '../../dbHelper/mongodb.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo_dart;
+import 'package:http/http.dart' as http;
 
 class UserProvider extends ChangeNotifier {
   String _userEmail = '';
@@ -17,11 +20,14 @@ class UserProvider extends ChangeNotifier {
   Future<void> fetchData() async {
     try {
       // Check if the email is already registered
-      final userCollection = MongoDatabase.db.collection(GOVN_COLLECTION);
-      userData = await userCollection.findOne(
-        mongo_dart.where.eq('email', _userEmail),
-      );
-
+      final response = await http.get(
+      Uri.parse('http://localhost:3000/api/checkUser?email=$_userEmail'),
+    );
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      
+      userData = data['userdata'];
+    }
       // Notify listeners to update the UI
       notifyListeners();
     } catch (e) {

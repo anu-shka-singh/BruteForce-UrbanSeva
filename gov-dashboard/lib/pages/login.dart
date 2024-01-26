@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import '../../dbHelper/mongodb.dart';
 import '../../dbHelper/constant.dart';
 import 'home/user_provider.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 final TextEditingController _passwordTextController = TextEditingController();
 final TextEditingController _emailTextController = TextEditingController();
@@ -146,18 +148,42 @@ class LoginPage extends StatelessWidget {
   }
 }
 
+// Future<bool> doesUserExists(String email) async {
+//   try {
+//     // Check if the email is already registered
+//     final userCollection = MongoDatabase.db.collection(GOVN_COLLECTION);
+//     userData = await userCollection.findOne(
+//       mongo_dart.where.eq('email', email),
+//     );
+
+//     // If methods is not empty, a user with this email exists
+//     return userData.isNotEmpty;
+//   } catch (e) {
+//     // Handle any errors
+//     return false;
+//   }
+// }
+
 Future<bool> doesUserExists(String email) async {
   try {
-    // Check if the email is already registered
-    final userCollection = MongoDatabase.db.collection(GOVN_COLLECTION);
-    userData = await userCollection.findOne(
-      mongo_dart.where.eq('email', email),
+    final response = await http.get(
+      Uri.parse('http://localhost:3000/api/checkUser?email=$email'),
     );
 
-    // If methods is not empty, a user with this email exists
-    return userData.isNotEmpty;
+    // Check the response from the server
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      
+      userData = data['userdata'];
+      print('UserData: $userData');
+      return data['exists'];
+    } else {
+      return false;
+    }
   } catch (e) {
-    // Handle any errors
+    // Handle network errors
+    print('Error: $e');
     return false;
   }
 }
+

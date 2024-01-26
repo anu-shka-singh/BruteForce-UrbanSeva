@@ -16,7 +16,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final userProvider = Provider.of<UserProvider>(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      userProvider.fetchData();
+      userProvider.fetchData(); 
     });
     return Scaffold(
       body: Row(
