@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dbHelper/mongodb.dart';
 import 'profile.dart';
-import 'package:http/http.dart' as http;
 import 'community_page.dart';
 import 'announcements.dart';
 import 'map_page.dart';
@@ -200,109 +198,107 @@ class DashboardState extends State<Dashboard> {
       ),
       body: SingleChildScrollView(
           child: Column(children: [
-            Container(
-              //color: Colors.grey.shade100,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Color(0xFF21222D),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(70),
+        Container(
+          //color: Colors.grey.shade100,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: Color(0xFF21222D),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(70),
+            ),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 12.0, 20.0),
+                child: Image.asset(
+                  'images/female.png',
+                  height: 60,
+                  width: 60,
                 ),
               ),
-              child: Row(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20.0, 0.0, 12.0, 20.0),
-                    child: Image.asset(
-                      'images/female.png',
-                      height: 60,
-                      width: 60,
-
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        name,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-
-                      Text(
-                        'Latitude: ${currentLocation?.latitude}\nLongitude: ${currentLocation?.longitude}',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                    ],
+                  Text(
+                    'Latitude: ${currentLocation?.latitude}\nLongitude: ${currentLocation?.longitude}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
                   ),
                 ],
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Card(
-              elevation: 9,
-              color: const Color.fromARGB(255, 255, 255, 255),
-              margin: const EdgeInsets.all(14.0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Card(
+          elevation: 9,
+          color: const Color.fromARGB(255, 255, 255, 255),
+          margin: const EdgeInsets.all(14.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Replace the Icon with an Image widget
+                Image.asset(
+                  'images/map.png', // Provide the path to your image
+                  width: 70, // Adjust the width as needed
+                  height: 90, // Adjust the height as needed
+                ),
+                const SizedBox(width: 20),
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Replace the Icon with an Image widget
-                    Image.asset(
-                      'images/map.png', // Provide the path to your image
-                      width: 70, // Adjust the width as needed
-                      height: 90, // Adjust the height as needed
-                    ),
-                    const SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              "Issues Near You",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.arrow_forward),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MapScreen(
-                                      // Pass the coordinates to MapScreen
-                                      initialLatitude: currentLocation?.latitude,
-                                      initialLongitude: currentLocation?.longitude,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
                         const Text(
-                          "See various issues in your locality",
-                          style:
+                          "Issues Near You",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.arrow_forward),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MapScreen(
+                                  // Pass the coordinates to MapScreen
+                                  initialLatitude: currentLocation?.latitude,
+                                  initialLongitude: currentLocation?.longitude,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      "See various issues in your locality",
+                      style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 20),

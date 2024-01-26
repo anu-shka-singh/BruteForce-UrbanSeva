@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../login.dart';
-import '../../dbHelper/mongodb.dart';
-import 'package:http/http.dart' as http;
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -31,10 +29,10 @@ class _MyHomePageState extends State<MyHomePage> {
   _navigatetohome() {
     // Directly navigate to the login page
     Future.delayed(Duration(seconds: 1)).then((_) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => LoginPage()),
-    );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
     });
   }
 

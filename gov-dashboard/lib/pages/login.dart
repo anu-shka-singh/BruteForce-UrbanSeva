@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard/dashboard.dart';
-import 'package:mongo_dart/mongo_dart.dart' as mongo_dart;
 import 'package:provider/provider.dart';
-import '../../dbHelper/mongodb.dart';
-import '../../dbHelper/constant.dart';
 import 'home/user_provider.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -54,7 +51,7 @@ class LoginPage extends StatelessWidget {
                     labelText: 'Email',
                   ),
                   onChanged: (value) {
-                   email = value;
+                    email = value;
                   },
                 ),
                 const SizedBox(height: 20),
@@ -70,12 +67,12 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
-                    try{
-                      bool userExists =
-                      await doesUserExists(email);
+                    try {
+                      bool userExists = await doesUserExists(email);
                       if (userExists) {
                         String userEmail = email;
-                        Provider.of<UserProvider>(context, listen: false).setUserEmail(userEmail);
+                        Provider.of<UserProvider>(context, listen: false)
+                            .setUserEmail(userEmail);
                         while (userData['pswd'] != password) {
                           await showDialog(
                             context: context,
@@ -88,8 +85,7 @@ class LoginPage extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                          LoginPage()),
+                                          builder: (context) => LoginPage()),
                                     );
                                     _emailTextController.text = userEmail;
                                   },
@@ -103,29 +99,26 @@ class LoginPage extends StatelessWidget {
                           context,
                           MaterialPageRoute(builder: (context) => DashBoard()),
                         );
-                      }
-                      else
-                        {
-                          await showDialog(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                              title: const Text("Invalid Credentials"),
-                              content: const Text('Try Again'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginPage()),
-                                  ),
-                                  child: const Text('OK'),
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: const Text("Invalid Credentials"),
+                            content: const Text('Try Again'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()),
                                 ),
-                              ],
-                            ),
-                          );
-                        }
-                    }
-                    catch (e) {
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    } catch (e) {
                       print('Error connecting to MongoDB: $e');
                     }
                   },
@@ -167,13 +160,14 @@ class LoginPage extends StatelessWidget {
 Future<bool> doesUserExists(String email) async {
   try {
     final response = await http.get(
-      Uri.parse('https://node-server-us.onrender.com/api/checkUser?email=$email'),
+      Uri.parse(
+          'https://node-server-us.onrender.com/api/checkUser?email=$email'),
     );
 
     // Check the response from the server
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
-      
+
       userData = data['userdata'];
       print('UserData: $userData');
       return data['exists'];

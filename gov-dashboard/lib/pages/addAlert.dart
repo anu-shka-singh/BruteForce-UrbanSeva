@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter_dashboard/dashboard.dart';
-import 'package:flutter_dashboard/dbHelper/constant.dart';
 import 'package:intl/intl.dart';
-import '../dbHelper/mongodb.dart';
 import '../widgets/menu.dart';
 import '../../dbHelper/datamodels.dart';
 import 'dart:convert';
@@ -128,7 +126,7 @@ class _AddIssueState extends State<AddAlert> {
                         auth: selectedCategory,
                         date: selectedDate != null
                             ? DateFormat("yyyy-MM-dd").format(selectedDate!)
-                            : '', 
+                            : '',
                         desc:
                             '${detailsController.text} due to ${reasonController.text} in ${locationController.text} (${pincodeController.text})',
                         time: '${DateTime.now().hour}:${DateTime.now().minute}',

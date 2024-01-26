@@ -1,11 +1,9 @@
-
 import 'package:citizen/user_dashboard.dart';
 import 'chatbot_screen.dart';
 import 'community_page.dart';
 import 'user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({super.key, required this.user});
@@ -24,16 +22,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         context,
         MaterialPageRoute(
             builder: (context) => Dashboard(
-              user: widget.user,
-            )),
+                  user: widget.user,
+                )),
       );
     } else if (index == 1) {
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => Communities(
-              user: widget.user,
-            )),
+                  user: widget.user,
+                )),
       );
     } else if (index == 2) {
       Navigator.push(
@@ -41,24 +39,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
         MaterialPageRoute(
             builder: (context) => ChatBotScreen(user: widget.user)),
       );
-    }
-    else if (index == 3) {
+    } else if (index == 3) {
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => ProfileScreen(
-              user: widget.user,
-            )),
+                  user: widget.user,
+                )),
       );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       userProvider.fetchData();
     });
 
@@ -69,9 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         // title: Text("Profile", style: TextStyle(fontSize: 26),),
         // centerTitle: true,
       ),
-
-      body:
-      Column(
+      body: Column(
         children: [
           Container(
             child: Text(
@@ -122,7 +116,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // Align children to the start
+              crossAxisAlignment:
+                  CrossAxisAlignment.start, // Align children to the start
               children: [
                 Container(
                   width: double.infinity,
@@ -141,11 +136,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-
-
         ],
-      )
-      ,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 5,
         onTap: _onItemTapped,
@@ -204,11 +196,11 @@ class PointsCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-          Image.asset(
-            'images/reward.png', // Replace with your actual image asset
-            width: 60, // Set the width of the image
-            height: 50, // Set the height of the image
-          ),
+              Image.asset(
+                'images/reward.png', // Replace with your actual image asset
+                width: 60, // Set the width of the image
+                height: 50, // Set the height of the image
+              ),
 
               Text(
                 'Your Points',
@@ -239,4 +231,3 @@ class PointsCard extends StatelessWidget {
     );
   }
 }
-
