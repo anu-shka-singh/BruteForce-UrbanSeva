@@ -102,12 +102,12 @@ class UserTypeGrid extends StatelessWidget {
   final String selectedUserType;
   final int index;
 
-  const UserTypeGrid(
-      {super.key,
-      required this.onUserTypeSelected,
-      required this.selectedUserType,
-      required this.index,
-      });
+  const UserTypeGrid({
+    super.key,
+    required this.onUserTypeSelected,
+    required this.selectedUserType,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -167,16 +167,6 @@ class UserTypeGrid extends StatelessWidget {
           textColor: const Color.fromARGB(255, 143, 119, 25),
           colorTile: const Color.fromARGB(221, 253, 246, 216),
           index: 4,
-        ),
-        ProbTypeTile(
-          key: const ValueKey<String>("Security"),
-          icon: Icons.gps_fixed,
-          text: "Security",
-          onUserTypeSelected: onUserTypeSelected,
-          isSelected: selectedUserType == "Security",
-          textColor: const Color.fromARGB(255, 13, 108, 107),
-          colorTile: const Color.fromARGB(219, 219, 254, 254),
-          index: 5,
         ),
         ProbTypeTile(
           key: const ValueKey<String>("Others"),
