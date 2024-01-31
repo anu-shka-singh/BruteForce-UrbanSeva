@@ -114,7 +114,7 @@ class _AddIssueState extends State<AddAlert> {
                   const SizedBox(height: 10),
                   TextField(
                     controller: pincodeController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Enter Pin Code of the Area',
                     ),
                   ),

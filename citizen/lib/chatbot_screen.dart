@@ -43,7 +43,6 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
 
   Future<String> getResponse(String message) async {
     try {
-      print(message);
       String apiUrl = 'http://192.168.225.7:5000/api?input=$message';
 
       final response = await http.get(Uri.parse(apiUrl));
@@ -52,18 +51,14 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
         final jsonResponse = json.decode(response.body);
         return jsonResponse['response'];
       } else {
-        print("Request failed with status: ${response.statusCode}");
         throw Exception('Failed to load response');
       }
     } catch (e) {
-      print("Error: $e");
       throw Exception('Failed to make the request');
     }
   }
 
-
   Widget _buildMessage(Message message) {
-
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: Padding(
@@ -81,13 +76,13 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
             ),
             const SizedBox(height: 5), // Adjust spacing as needed
             Container(
-              constraints: BoxConstraints(
+              constraints: const BoxConstraints(
                 maxWidth: 250,
               ),
               decoration: BoxDecoration(
                 color: message.isMe
-                    ?  Color(0xFF21222D)
-                    :  Color(0xFFD3D3DA), // Change colors as desired
+                    ? const Color(0xFF21222D)
+                    : const Color(0xFFD3D3DA), // Change colors as desired
                 borderRadius: BorderRadius.circular(8),
               ),
               padding: const EdgeInsets.all(10),
@@ -95,7 +90,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                 message.text,
                 style: TextStyle(
                   fontSize: 18,
-                  color: message.isMe ? Colors.white : Color(0xFF21222D),
+                  color: message.isMe ? Colors.white : const Color(0xFF21222D),
                 ),
               ),
             ),
@@ -104,7 +99,6 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -154,8 +148,6 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
           )
         ],
       ),
-
-
     );
   }
 }

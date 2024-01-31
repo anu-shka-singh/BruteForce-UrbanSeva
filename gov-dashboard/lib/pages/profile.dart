@@ -4,6 +4,8 @@ import '../widgets/menu.dart';
 import 'home/user_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -16,7 +18,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final userProvider = Provider.of<UserProvider>(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      userProvider.fetchData(); 
+      userProvider.fetchData();
     });
     return Scaffold(
       body: Row(
@@ -43,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
+                      const Row(
                         children: [
                           CircleAvatar(
                             radius: 50,
@@ -60,27 +62,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 40),
+                      const SizedBox(height: 40),
                       UserProfileInfo(
                           label: 'Name',
                           value: '${userProvider.userData!['name']}'),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       UserProfileInfo(
                           label: 'Email',
                           value: '${userProvider.userData!['email']}'),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       UserProfileInfo(
                           label: 'Phone',
                           value: '${userProvider.userData!['phone']}'),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       UserProfileInfo(
                           label: 'Pin Code',
                           value: '${userProvider.userData!['pincode']}'),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       UserProfileInfo(
                           label: 'Zone',
                           value: '${userProvider.userData!['zone']}'),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
@@ -97,7 +99,7 @@ class UserProfileInfo extends StatelessWidget {
   final String label;
   final String value;
 
-  UserProfileInfo({required this.label, required this.value});
+  const UserProfileInfo({super.key, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +108,7 @@ class UserProfileInfo extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -115,7 +117,7 @@ class UserProfileInfo extends StatelessWidget {
         Expanded(
           child: Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
             ),
           ),

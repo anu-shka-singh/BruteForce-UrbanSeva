@@ -352,24 +352,20 @@ class _IssueTrackerState extends State<IssueTracker> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        child: Container(
-                                          child: Image.asset(
-                                            'assets/images/pothole1.jpg', // Replace with the actual path to your image
-                                            width: 400,
-                                            height: 200,
-                                          ),
+                                        child: Image.asset(
+                                          'assets/images/pothole1.jpg', // Replace with the actual path to your image
+                                          width: 400,
+                                          height: 200,
                                         )),
                                   ),
                                   Card(
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      child: Container(
-                                        child: Image.asset(
-                                          'assets/images/pothole2.jpg', // Replace with the actual path to your image
-                                          width: 400,
-                                          height: 200,
-                                        ),
+                                      child: Image.asset(
+                                        'assets/images/pothole2.jpg', // Replace with the actual path to your image
+                                        width: 400,
+                                        height: 200,
                                       )),
                                 ],
                               ),
@@ -381,27 +377,30 @@ class _IssueTrackerState extends State<IssueTracker> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 33.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Add your button click logic here
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                            EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 33.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Add your button click logic here
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.red),
+                            padding:
+                                MaterialStateProperty.all<EdgeInsetsGeometry>(
+                              const EdgeInsets.symmetric(
+                                  vertical: 16.0, horizontal: 24.0),
+                            ),
                           ),
-                        ),
-                        child: Text('Delete this Issue',
-                          style: TextStyle(
-                          fontSize: 18.0,
-                        ),
+                          child: const Text(
+                            'Delete this Issue',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                    ),
                   ],
-
                 ),
               ),
             ),

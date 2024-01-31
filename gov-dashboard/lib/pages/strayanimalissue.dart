@@ -94,7 +94,7 @@ class _StrayAnimalsPageState extends State<StrayAnimalsPage> {
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => IssueTracker()),
+                                  builder: (context) => const IssueTracker()),
                             ),
                           ),
                         );

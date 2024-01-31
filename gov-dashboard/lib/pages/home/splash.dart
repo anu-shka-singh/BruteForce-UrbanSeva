@@ -28,10 +28,10 @@ class _MyHomePageState extends State<MyHomePage> {
   // }
   _navigatetohome() {
     // Directly navigate to the login page
-    Future.delayed(Duration(seconds: 1)).then((_) {
+    Future.delayed(const Duration(seconds: 1)).then((_) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     });
   }

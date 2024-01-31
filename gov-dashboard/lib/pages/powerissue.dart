@@ -104,7 +104,7 @@ class _ElectricityPowerPageState extends State<ElectricityPowerPage> {
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => IssueTracker()),
+                                  builder: (context) => const IssueTracker()),
                             ),
                           ),
                         );

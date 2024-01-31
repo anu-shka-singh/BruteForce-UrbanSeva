@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizedBox _height(BuildContext context) => SizedBox(
+    SizedBox height(BuildContext context) => SizedBox(
           height: Responsive.isDesktop(context) ? 30 : 20,
         );
 
@@ -28,13 +28,13 @@ class HomePage extends StatelessWidget {
                 height: Responsive.isMobile(context) ? 5 : 18,
               ),
               Header(scaffoldKey: scaffoldKey),
-              _height(context),
+              height(context),
               const ProblemMap(),
-              _height(context),
+              height(context),
               LineChartCard(),
-              _height(context),
+              height(context),
               BarGraphCard(),
-              _height(context),
+              height(context),
             ],
           ),
         ),

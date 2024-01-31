@@ -75,7 +75,7 @@ class _SelectComplaintTypePageState extends State<SelectComplaintTypePage> {
                   child: ElevatedButton(
                     onPressed: navigateToSelectedPage,
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
+                      backgroundColor: Colors.transparent,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),

@@ -10,7 +10,7 @@ final TextEditingController _emailTextController = TextEditingController();
 var userData;
 
 class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +85,8 @@ class LoginPage extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => LoginPage()),
+                                          builder: (context) =>
+                                              const LoginPage()),
                                     );
                                     _emailTextController.text = userEmail;
                                   },
@@ -110,7 +111,7 @@ class LoginPage extends StatelessWidget {
                                 onPressed: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LoginPage()),
+                                      builder: (context) => const LoginPage()),
                                 ),
                                 child: const Text('OK'),
                               ),
@@ -176,7 +177,6 @@ Future<bool> doesUserExists(String email) async {
     }
   } catch (e) {
     // Handle network errors
-    print('Error: $e');
     return false;
   }
 }

@@ -62,19 +62,8 @@ class _TakeComplainState extends State<TakeComplain> {
       setState(() {
         _image = File(image.path); // Store the taken image
         final bytes = File(_image!.path).readAsBytesSync();
-        base64Image = "data:image/png;base64," + base64Encode(bytes); //converting to base 64 image for storage
-      });
-    }
-
-    detectimage(_image!);
-  }
-
-  Future<void> _openGallery() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      setState(() {
-        _image = File(image.path); // Store the taken image
+        base64Image =
+            "data:image/png;base64,${base64Encode(bytes)}"; //converting to base 64 image for storage
       });
     }
 
@@ -358,80 +347,75 @@ class _TakeComplainState extends State<TakeComplain> {
                           if (_image != null)
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      height: 150.0,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          width: 1.0,
-                                          color: Colors.grey,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: double.infinity,
+                                    height: 150.0,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 1.0,
+                                        color: Colors.grey,
                                       ),
-                                      child: Image.file(
-                                        _image!,
-                                        fit: BoxFit.cover,
-                                      ),
+                                      borderRadius: BorderRadius.circular(5.0),
                                     ),
-                                    const SizedBox(height: 4.0),
-                                    if (_predictions.isNotEmpty &&
-                                        (_predictions[0]['label'][0]
-                                                .toString() ==
-                                            widget.index.toString()))
-                                      const Row(
-                                        children: [
-                                          Icon(
-                                            Icons.check_rounded,
+                                    child: Image.file(
+                                      _image!,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4.0),
+                                  if (_predictions.isNotEmpty &&
+                                      (_predictions[0]['label'][0].toString() ==
+                                          widget.index.toString()))
+                                    const Row(
+                                      children: [
+                                        Icon(
+                                          Icons.check_rounded,
+                                          color:
+                                              Color.fromARGB(255, 40, 117, 42),
+                                          size: 30,
+                                        ),
+                                        Text(
+                                          // _predictions[0]['label']
+                                          //     .toString()
+                                          //     .substring(2),
+                                          "Verified",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
                                             color: Color.fromARGB(
                                                 255, 40, 117, 42),
-                                            size: 30,
                                           ),
-                                          Text(
-                                            // _predictions[0]['label']
-                                            //     .toString()
-                                            //     .substring(2),
-                                            "Verified",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(
-                                                  255, 40, 117, 42),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    if (_predictions.isNotEmpty &&
-                                        (_predictions[0]['label'][0]
-                                                .toString() !=
-                                            widget.index.toString()))
-                                      const Row(
-                                        children: [
-                                          Icon(
-                                            Icons.close_rounded,
+                                        ),
+                                      ],
+                                    ),
+                                  if (_predictions.isNotEmpty &&
+                                      (_predictions[0]['label'][0].toString() !=
+                                          widget.index.toString()))
+                                    const Row(
+                                      children: [
+                                        Icon(
+                                          Icons.close_rounded,
+                                          color:
+                                              Color.fromARGB(255, 173, 24, 44),
+                                          size: 30,
+                                        ),
+                                        Text(
+                                          // _predictions[0]['label']
+                                          //     .toString()
+                                          //     .substring(2),
+                                          "Not Verified",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
                                             color: Color.fromARGB(
                                                 255, 173, 24, 44),
-                                            size: 30,
                                           ),
-                                          Text(
-                                            // _predictions[0]['label']
-                                            //     .toString()
-                                            //     .substring(2),
-                                            "Not Verified",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(
-                                                  255, 173, 24, 44),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                  ],
-                                ),
+                                        ),
+                                      ],
+                                    ),
+                                ],
                               ),
                             ),
                         ],
@@ -473,7 +457,8 @@ class _TakeComplainState extends State<TakeComplain> {
                             onPressed: () async {
                               final data = Complaint(
                                   problemType: widget.probType,
-                                  probText: problems[widget.index][selectedRadio],
+                                  probText: problems[widget.index]
+                                      [selectedRadio],
                                   problemDesc: probDesc,
                                   base64Image: base64Image,
                                   resolveStatus: 0,
@@ -490,8 +475,9 @@ class _TakeComplainState extends State<TakeComplain> {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: const Color(0xFF21222D), // Button color
-                              onPrimary: Colors.white, // Text color
+                              foregroundColor: Colors.white,
+                              backgroundColor:
+                                  const Color(0xFF21222D), // Text color
                               fixedSize: const Size(150, 50),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(

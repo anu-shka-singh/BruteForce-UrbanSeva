@@ -8,7 +8,7 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (context) => UserProvider(),
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color(0xFF21222D),
       ),
       title: 'Urban Seva',
-      home: MyHomePage(),
+      home: const MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
   }

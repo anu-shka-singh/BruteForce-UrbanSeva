@@ -68,21 +68,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Column(
         children: [
           Container(
-            child: Text(
+            height: 60,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Color(0xFF21222D),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(45),
+              ),
+            ),
+            child: const Text(
               "Profile",
               style: TextStyle(
                 fontSize: 35,
                 color: Colors.white,
               ),
               textAlign: TextAlign.center,
-            ),
-            height: 60,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: const Color(0xFF21222D),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(45),
-              ),
             ),
           ),
           Padding(
@@ -96,19 +96,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 70,
                     backgroundColor: Colors.transparent,
                     backgroundImage: AssetImage('images/female.png'),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
                     widget.user,
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 30, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 30),
-                  PointsCard(),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 30),
+                  const PointsCard(),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
@@ -119,7 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               crossAxisAlignment:
                   CrossAxisAlignment.start, // Align children to the start
               children: [
-                Container(
+                const SizedBox(
                   width: double.infinity,
                   child: Text(
                     "Coupons",
@@ -127,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(height: 10), // Add some vertical spacing
+                const SizedBox(height: 10), // Add some vertical spacing
                 Image.asset(
                   'images/coupon.png', // Replace with your image path
                   width: 350, // Set the width of the image
@@ -181,9 +182,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 }
 
 class PointsCard extends StatelessWidget {
+  const PointsCard({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 355, // Set your desired width
       height: 90, // Set your desired height
       child: Card(
@@ -202,15 +205,15 @@ class PointsCard extends StatelessWidget {
                 height: 50, // Set the height of the image
               ),
 
-              Text(
+              const Text(
                 'Your Points',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(width: 7),
-              Text(
+              const SizedBox(width: 7),
+              const Text(
                 '50', // Replace with your actual points
                 style: TextStyle(
                   fontSize: 24,

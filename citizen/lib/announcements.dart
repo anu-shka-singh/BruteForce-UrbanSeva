@@ -19,6 +19,7 @@ class Alerts extends StatefulWidget {
 class _AlertsState extends State<Alerts> {
   List<Map<String, dynamic>> Alerts = [];
 
+  @override
   void initState() {
     super.initState();
     fetchAlerts();
@@ -80,7 +81,7 @@ class _AlertsState extends State<Alerts> {
               ),
               ListView.builder(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: Alerts.length,
                 itemBuilder: (context, index) {
                   final announcement = Alerts[index];
@@ -118,40 +119,38 @@ class CustomCard extends StatelessWidget {
       elevation: 6,
       child: Column(
         children: [
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.warning_amber_rounded,
-                    size: 55,
-                    color: Color.fromARGB(255, 226, 41, 78),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        dept,
-                        style: const TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.warning_amber_rounded,
+                  size: 55,
+                  color: Color.fromARGB(255, 226, 41, 78),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      dept,
+                      style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        dateTime,
-                        style: const TextStyle(
-                          fontSize: 17,
-                          color: Colors.grey,
-                        ),
+                    ),
+                    Text(
+                      dateTime,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        color: Colors.grey,
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           Padding(
