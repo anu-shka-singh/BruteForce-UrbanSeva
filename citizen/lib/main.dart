@@ -1,10 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
+
 import 'user_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'splash.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
     ChangeNotifierProvider(
       create: (context) => UserProvider(),

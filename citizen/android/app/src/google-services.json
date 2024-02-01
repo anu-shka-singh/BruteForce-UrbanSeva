@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "542734489992",
+    "project_id": "urban-seva-10f9d",
+    "storage_bucket": "urban-seva-10f9d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542734489992:android:57e61a68fabba26192c23d",
+        "android_client_info": {
+          "package_name": "com.example.citizen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKsPp5cRZzszAylWblhVtn1csPDhwKn0M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
