@@ -12,6 +12,7 @@ class FirebaseAuthService{
     }
     catch(e){
       print("error");
+      return null;
     }
   }
 
@@ -19,10 +20,12 @@ class FirebaseAuthService{
 
     try{
       UserCredential credential = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      print(credential.user);
       return credential.user;
     }
     catch(e){
       print("error");
+      return null;
     }
   }
 

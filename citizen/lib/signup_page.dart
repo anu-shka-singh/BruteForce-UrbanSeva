@@ -119,7 +119,7 @@ class _SignUpState extends State<SignUp> {
                 // Use a custom button widget for reusability
                 signInSignUpButton(context, false, () async {
                   final userExists =
-                  await checkUserExistence();
+                  await checkUserExistence(_emailTextController.text);
                   if (userExists) {
                     showDialog(
                       context: context,
@@ -211,18 +211,16 @@ class _SignUpState extends State<SignUp> {
       ],
     );
   }
+  Future<bool> checkUserExistence(String email) async {
+    try {
+      // Check if the email is already registered
+      var methods =
+          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
 
-  Future<bool> checkUserExistence() async {
-    FirebaseAuth _auth = FirebaseAuth.instance;
-
-    // Get the current user
-    User? currentUser = _auth.currentUser;
-
-    if (currentUser != null) {
-      print('User exists. User ID: ${currentUser.uid}');
-      return true;
-    } else {
-      print('User does not exist.');
+      // If methods is not empty, a user with this email exists
+      return methods.isNotEmpty;
+    } catch (e) {
+      // Handle any errors
       return false;
     }
   }

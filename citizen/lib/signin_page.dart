@@ -3,11 +3,19 @@
 import 'package:citizen/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'dbHelper/constant.dart';
 import 'dbHelper/mongodb.dart';
 import 'user_dashboard.dart';
 import 'signup_page.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo_dart;
+
+GoogleSignIn googleSignIn = GoogleSignIn(
+  scopes: <String>[
+    'email',
+    'https://www.googleapis.com/auth/contacts.readonly'
+  ],
+);
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -21,11 +29,39 @@ void main() {
 }
 
 class _LoginState extends State<LoginPage> {
-
   final FirebaseAuthService _auth = FirebaseAuthService();
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
   var userData;
+  late GoogleSignInAccount currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+
+    googleSignIn.onCurrentUserChanged.listen(
+      (account) {
+        setState(() {
+          currentUser = account!;
+        });
+
+        if (currentUser != null) {
+          print("User is already authenticated");
+        }
+      },
+    );
+    googleSignIn.signInSilently();
+  }
+
+  Future<void> handleSignIn() async {
+    try {
+      await googleSignIn.signIn();
+    } catch (error) {
+      print("Sign in error: " + error.toString());
+    }
+  }
+
+  Future<void> handleSignOut() => googleSignIn.disconnect();
 
   @override
   Widget build(BuildContext context) {
@@ -81,35 +117,35 @@ class _LoginState extends State<LoginPage> {
                 ),
                 signInSignUpButton(context, true, () async {
                   try {
-                    bool userExists = await checkUserExistence();
+                    bool userExists =
+                        await checkUserExistence(_emailTextController.text);
+                    print(userExists);
 
                     if (userExists) {
                       User? user = await _auth.signInWithEmailANdPassword(
                           _emailTextController.text,
                           _passwordTextController.text);
 
-                      if(user != null)
-                        {
-                          await showDialog(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                              title: const Text('Success'),
-                              content: const Text('Login Successful.'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Dashboard(
-                                            user: _emailTextController.text)),
-                                  ),
-                                  child: const Text('OK'),
+                      if (user != null) {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: const Text('Success'),
+                            content: const Text('Login Successful.'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Dashboard(
+                                          user: _emailTextController.text)),
                                 ),
-                              ],
-                            ),
-                          );
-                        }
-                      else{
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
                         await showDialog(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
@@ -122,7 +158,7 @@ class _LoginState extends State<LoginPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                        const LoginPage()),
+                                            const LoginPage()),
                                   );
                                 },
                                 child: const Text('OK'),
@@ -131,7 +167,6 @@ class _LoginState extends State<LoginPage> {
                           ),
                         );
                       }
-
                     } else {
                       // User doesn't exist, show appropriate dialog or handle it as needed
                       await showDialog(
@@ -152,20 +187,25 @@ class _LoginState extends State<LoginPage> {
                         ),
                       );
                     }
-                  }//on FirebaseAuthException
+                  } //on FirebaseAuthException
                   catch (error) {
                     showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                                title: const Text('Error'),
-                                content: Text(
-                                    "Error ${error.toString().split(']')[1]}"),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: const Text('OK'),
-                                  )
-                                ]));
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('Error'),
+                        content: Text("User does not exist"),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignUp()),
+                            ),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
                   }
                 }),
                 const SizedBox(
@@ -223,17 +263,16 @@ class _LoginState extends State<LoginPage> {
     );
   }
 
-  Future<bool> checkUserExistence() async {
-    FirebaseAuth _auth = FirebaseAuth.instance;
+  Future<bool> checkUserExistence(String email) async {
+    try {
+      // Check if the email is already registered
+      var methods =
+          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
 
-    // Get the current user
-    User? currentUser = _auth.currentUser;
-
-    if (currentUser != null) {
-      print('User exists. User ID: ${currentUser.uid}');
-      return true;
-    } else {
-      print('User does not exist.');
+      // If methods is not empty, a user with this email exists
+      return methods.isNotEmpty;
+    } catch (e) {
+      // Handle any errors
       return false;
     }
   }
