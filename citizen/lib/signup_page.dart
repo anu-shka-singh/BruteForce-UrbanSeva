@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+//use_build_context_synchronously
 
 import 'dbHelper/constant.dart';
 import 'dbHelper/datamodels.dart';
@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo_dart;
 import 'dbHelper/mongodb.dart';
 import 'signin_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -19,6 +20,31 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _nameTextController = TextEditingController();
+
+  Future<void> registerUserInFirebase(String email, String password) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      // User is registered in Firebase, now store additional data in MongoDB
+      final data = Users(
+        name: _nameTextController.text,
+        userId: userCredential.user?.uid ?? '', // Firebase UID
+      );
+
+      await MongoDatabase.db.collection(USER_COLLECTION).insert(data.toJson());
+
+      // Continue with your success dialog or navigation
+    } on FirebaseAuthException catch (e) {
+      // Handle FirebaseAuthException, e.g., if the email is already in use
+      print('Firebase Auth Exception: ${e.message}');
+      // Show an error dialog or take appropriate action
+    } catch (e) {
+      // Handle other errors
+      print('Error: $e');
+      // Show an error dialog or take appropriate action
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,14 +119,14 @@ class _SignUpState extends State<SignUp> {
                 // Use a custom button widget for reusability
                 signInSignUpButton(context, false, () async {
                   final userExists =
-                      await doesUserExist(_emailTextController.text);
+                  await checkUserExistence();
                   if (userExists) {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
                         title: const Text('User Already Exists'),
                         content:
-                            const Text('This email is already registered.'),
+                        const Text('This email is already registered.'),
                         actions: <Widget>[
                           TextButton(
                             onPressed: () => Navigator.push(
@@ -114,13 +140,8 @@ class _SignUpState extends State<SignUp> {
                     );
                   } else {
                     try {
-                      final data = User(
-                          email: _emailTextController.text,
-                          pswd: _passwordTextController.text,
-                          name: _nameTextController.text);
-                      await MongoDatabase.db
-                          .collection(USER_COLLECTION)
-                          .insert(data.toJson());
+                      await registerUserInFirebase(_emailTextController.text,
+                          _passwordTextController.text);
                       showDialog(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
@@ -191,17 +212,17 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Future<bool> doesUserExist(String email) async {
-    try {
-      // Check if the email is already registered
-      final userCollection = MongoDatabase.db.collection(USER_COLLECTION);
-      var userData = await userCollection.find(
-        mongo_dart.where.eq('email', email),
-      );
-      // If methods is not empty, a user with this email exists
-      return userData.isNotEmpty;
-    } catch (e) {
-      // Handle any errors
+  Future<bool> checkUserExistence() async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+
+    // Get the current user
+    User? currentUser = _auth.currentUser;
+
+    if (currentUser != null) {
+      print('User exists. User ID: ${currentUser.uid}');
+      return true;
+    } else {
+      print('User does not exist.');
       return false;
     }
   }

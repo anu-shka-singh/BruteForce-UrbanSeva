@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:citizen/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dbHelper/constant.dart';
 import 'dbHelper/mongodb.dart';
@@ -19,6 +21,8 @@ void main() {
 }
 
 class _LoginState extends State<LoginPage> {
+
+  final FirebaseAuthService _auth = FirebaseAuthService();
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
   var userData;
@@ -77,11 +81,35 @@ class _LoginState extends State<LoginPage> {
                 ),
                 signInSignUpButton(context, true, () async {
                   try {
-                    bool userExists =
-                        await doesUserExists(_emailTextController.text);
+                    bool userExists = await checkUserExistence();
+
                     if (userExists) {
-                      String userEmail = _emailTextController.text;
-                      while (userData['pswd'] != _passwordTextController.text) {
+                      User? user = await _auth.signInWithEmailANdPassword(
+                          _emailTextController.text,
+                          _passwordTextController.text);
+
+                      if(user != null)
+                        {
+                          await showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Success'),
+                              content: const Text('Login Successful.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Dashboard(
+                                            user: _emailTextController.text)),
+                                  ),
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      else{
                         await showDialog(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
@@ -94,9 +122,8 @@ class _LoginState extends State<LoginPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const LoginPage()),
+                                        const LoginPage()),
                                   );
-                                  _emailTextController.text = userEmail;
                                 },
                                 child: const Text('OK'),
                               ),
@@ -104,15 +131,9 @@ class _LoginState extends State<LoginPage> {
                           ),
                         );
                       }
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Dashboard(
-                            user: userData['name'],
-                          ),
-                        ),
-                      );
+
                     } else {
+                      // User doesn't exist, show appropriate dialog or handle it as needed
                       await showDialog(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
@@ -131,8 +152,7 @@ class _LoginState extends State<LoginPage> {
                         ),
                       );
                     }
-                  }
-                  //on FirebaseAuthException
+                  }//on FirebaseAuthException
                   catch (error) {
                     showDialog(
                         context: context,
@@ -203,18 +223,17 @@ class _LoginState extends State<LoginPage> {
     );
   }
 
-  Future<bool> doesUserExists(String email) async {
-    try {
-      // Check if the email is already registered
-      final userCollection = MongoDatabase.db.collection(USER_COLLECTION);
-      userData = await userCollection.findOne(
-        mongo_dart.where.eq('email', email),
-      );
+  Future<bool> checkUserExistence() async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
 
-      // If methods is not empty, a user with this email exists
-      return userData.isNotEmpty;
-    } catch (e) {
-      // Handle any errors
+    // Get the current user
+    User? currentUser = _auth.currentUser;
+
+    if (currentUser != null) {
+      print('User exists. User ID: ${currentUser.uid}');
+      return true;
+    } else {
+      print('User does not exist.');
       return false;
     }
   }
