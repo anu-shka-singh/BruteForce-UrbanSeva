@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'signin_page.dart';
-import '../dbHelper/mongodb.dart';
+import '../../dbHelper/mongodb.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -10,7 +10,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-void main(){
+void main() {
   runApp(const MaterialApp(home: MyHomePage()));
 }
 
