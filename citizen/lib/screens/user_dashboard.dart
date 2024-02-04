@@ -1,13 +1,13 @@
-import 'dbHelper/mongodb.dart';
+import '../dbHelper/mongodb.dart';
 import 'profile.dart';
 import 'community_page.dart';
 import 'announcements.dart';
-import 'map_page.dart';
-import 'select_problem.dart';
-import 'signin_page.dart';
+import '../map/map_page.dart';
+import '../issue screens/select_problem.dart';
+import '../login/signin_page.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'chatbot_screen.dart';
+import '../chatbot/chatbot_screen.dart';
 
 class Dashboard extends StatefulWidget {
   Color clr = Colors.grey;

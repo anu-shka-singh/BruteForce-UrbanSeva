@@ -1,7 +1,7 @@
-import 'package:citizen/user_dashboard.dart';
-import 'chatbot_screen.dart';
+import 'package:citizen/screens/user_dashboard.dart';
+import '../chatbot/chatbot_screen.dart';
 import 'community_page.dart';
-import 'user_provider.dart';
+import '../user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

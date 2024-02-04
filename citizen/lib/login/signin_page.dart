@@ -4,7 +4,7 @@ import 'package:citizen/user_auth/firebase_auth_implementation/firebase_auth_ser
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'user_dashboard.dart';
+import '../screens/user_dashboard.dart';
 import 'signup_page.dart';
 
 GoogleSignIn googleSignIn = GoogleSignIn(

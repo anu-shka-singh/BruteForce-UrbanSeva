@@ -1,11 +1,11 @@
 //use_build_context_synchronously
 
-import 'dbHelper/constant.dart';
-import 'dbHelper/datamodels.dart';
-import 'user_dashboard.dart';
+import '../dbHelper/constant.dart';
+import '../dbHelper/datamodels.dart';
+import '../screens/user_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo_dart;
-import 'dbHelper/mongodb.dart';
+import '../dbHelper/mongodb.dart';
 import 'signin_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -119,14 +119,14 @@ class _SignUpState extends State<SignUp> {
                 // Use a custom button widget for reusability
                 signInSignUpButton(context, false, () async {
                   final userExists =
-                  await checkUserExistence(_emailTextController.text);
+                      await checkUserExistence(_emailTextController.text);
                   if (userExists) {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
                         title: const Text('User Already Exists'),
                         content:
-                        const Text('This email is already registered.'),
+                            const Text('This email is already registered.'),
                         actions: <Widget>[
                           TextButton(
                             onPressed: () => Navigator.push(
@@ -211,6 +211,7 @@ class _SignUpState extends State<SignUp> {
       ],
     );
   }
+
   Future<bool> checkUserExistence(String email) async {
     try {
       // Check if the email is already registered

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'user_dashboard.dart';
+import '../screens/user_dashboard.dart';
 
 void main() {
   runApp(
@@ -55,7 +55,10 @@ class _ComplaintConfirmationState extends State<ComplaintConfirmation> {
               const SizedBox(height: 40.0),
               const Text(
                 "You received 5 points.",
-                style: TextStyle(color: Color(0xFF21222D), fontSize: 25, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Color(0xFF21222D),
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20.0),
               const Text(

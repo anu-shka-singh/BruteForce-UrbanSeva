@@ -1,6 +1,6 @@
-import 'package:citizen/profile.dart';
+import 'package:citizen/screens/profile.dart';
 import 'package:flutter/material.dart';
-import 'chatbot_screen.dart';
+import '../chatbot/chatbot_screen.dart';
 import 'user_dashboard.dart';
 
 class Communities extends StatefulWidget {
@@ -10,6 +10,7 @@ class Communities extends StatefulWidget {
   @override
   State<Communities> createState() => CommunitiesState();
 }
+
 class PostState {
   int selectedLike = 0;
   int selectedDislike = 0;
@@ -66,14 +67,13 @@ class CommunitiesState extends State<Communities> {
         MaterialPageRoute(
             builder: (context) => ChatBotScreen(user: widget.user)),
       );
-    }
-    else if (index == 3) {
+    } else if (index == 3) {
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => ProfileScreen(
-              user: widget.user,
-            )),
+                  user: widget.user,
+                )),
       );
     }
   }
@@ -220,7 +220,6 @@ class CommunitiesState extends State<Communities> {
   }
 }
 
-
 class MyPostUI extends StatelessWidget {
   final String img;
   final String name;
@@ -266,8 +265,8 @@ class MyPostUI extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 30,
-                  backgroundImage: AssetImage(
-                      img), // Replace with your image path
+                  backgroundImage:
+                      AssetImage(img), // Replace with your image path
                 ),
                 const SizedBox(width: 15),
                 Column(

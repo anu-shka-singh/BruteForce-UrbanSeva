@@ -3,10 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'user_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'splash.dart';
+import 'login/splash.dart';
 import 'package:flutter/material.dart';
 
-Future main() async{
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(

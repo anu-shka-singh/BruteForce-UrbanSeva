@@ -1,5 +1,5 @@
-import 'dbHelper/constant.dart';
-import 'dbHelper/datamodels.dart';
+import '../dbHelper/constant.dart';
+import '../dbHelper/datamodels.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -7,7 +7,7 @@ import 'complaint_confirm.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:convert';
 
-import 'dbHelper/mongodb.dart';
+import '../dbHelper/mongodb.dart';
 
 class TakeComplain extends StatefulWidget {
   final String probType;
