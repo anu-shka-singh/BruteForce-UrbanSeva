@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../widgets/menu.dart';
-import 'home/user_provider.dart';
+import '../dashoboard_components/menu.dart';
+import '../user_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

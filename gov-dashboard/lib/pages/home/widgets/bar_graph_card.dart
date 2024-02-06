@@ -1,9 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard/responsive.dart';
-import 'package:flutter_dashboard/model/bar_graph_model.dart';
-import 'package:flutter_dashboard/model/graph_model.dart';
-import 'package:flutter_dashboard/widgets/custom_card.dart';
+import 'package:flutter_dashboard/dashboard_models/bar_graph_model.dart';
+import 'package:flutter_dashboard/dashboard_models/graph_model.dart';
+import 'package:flutter_dashboard/dashoboard_components/custom_card.dart';
 
 class BarGraphCard extends StatelessWidget {
   BarGraphCard({super.key});

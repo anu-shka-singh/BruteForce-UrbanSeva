@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard/pages/home/home_page.dart';
-import 'package:flutter_dashboard/widgets/menu.dart';
+import 'package:flutter_dashboard/dashoboard_components/menu.dart';
 import 'package:flutter_dashboard/responsive.dart';
-import 'package:flutter_dashboard/widgets/rightbar.dart';
+import 'package:flutter_dashboard/dashoboard_components/rightbar.dart';
 
 class DashBoard extends StatelessWidget {
   DashBoard({super.key});
@@ -14,7 +14,11 @@ class DashBoard extends StatelessWidget {
     return Scaffold(
         key: _scaffoldKey,
         drawer: !Responsive.isDesktop(context)
-            ? SizedBox(width: 250, child: Menu(scaffoldKey: _scaffoldKey, ))
+            ? SizedBox(
+                width: 250,
+                child: Menu(
+                  scaffoldKey: _scaffoldKey,
+                ))
             : null,
         endDrawer: Responsive.isMobile(context)
             ? SizedBox(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard/const.dart';
-import 'package:flutter_dashboard/pages/home/splash.dart';
-import 'package:flutter_dashboard/pages/home/user_provider.dart';
+import 'package:flutter_dashboard/pages/splash.dart';
+import 'package:flutter_dashboard/user_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {

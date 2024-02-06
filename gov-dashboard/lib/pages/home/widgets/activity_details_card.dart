@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard/responsive.dart';
-import 'package:flutter_dashboard/model/health_model.dart';
-import 'package:flutter_dashboard/widgets/custom_card.dart';
+import 'package:flutter_dashboard/dashboard_models/health_model.dart';
+import 'package:flutter_dashboard/dashoboard_components/custom_card.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ActivityDetailsCard extends StatelessWidget {

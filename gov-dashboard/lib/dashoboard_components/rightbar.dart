@@ -1,12 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dashboard/pages/powerissue.dart';
-import 'package:flutter_dashboard/pages/sanitationissue.dart';
-import 'package:flutter_dashboard/pages/strayanimalissue.dart';
-import 'package:flutter_dashboard/pages/waterissue.dart';
+import 'package:flutter_dashboard/pages/home/issue_pages/powerissue.dart';
+import 'package:flutter_dashboard/pages/home/issue_pages/sanitationissue.dart';
+import 'package:flutter_dashboard/pages/home/issue_pages/strayanimalissue.dart';
+import 'package:flutter_dashboard/pages/home/issue_pages/waterissue.dart';
 import 'package:flutter_dashboard/responsive.dart';
 
-import '../pages/roadissue.dart';
+import '../pages/home/issue_pages/roadissue.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
@@ -57,11 +57,31 @@ class Profile extends StatelessWidget {
               const Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ProfileTile(icon: Icons.directions_car, title: "Roads and Transportation", widget: RoadTransportationPage(),),
-                  ProfileTile(icon: Icons.opacity, title: "Water and Sewer", widget: WaterSewerPage(),),
-                  ProfileTile(icon: Icons.power, title: "Electricity and Power", widget: ElectricityPowerPage(),),
-                  ProfileTile(icon: Icons.delete, title: "Sanitation", widget: SanitationPage(),),
-                  ProfileTile(icon: Icons.pets, title: "Stray Animal", widget: StrayAnimalsPage(),),
+                  ProfileTile(
+                    icon: Icons.directions_car,
+                    title: "Roads and Transportation",
+                    widget: RoadTransportationPage(),
+                  ),
+                  ProfileTile(
+                    icon: Icons.opacity,
+                    title: "Water and Sewer",
+                    widget: WaterSewerPage(),
+                  ),
+                  ProfileTile(
+                    icon: Icons.power,
+                    title: "Electricity and Power",
+                    widget: ElectricityPowerPage(),
+                  ),
+                  ProfileTile(
+                    icon: Icons.delete,
+                    title: "Sanitation",
+                    widget: SanitationPage(),
+                  ),
+                  ProfileTile(
+                    icon: Icons.pets,
+                    title: "Stray Animal",
+                    widget: StrayAnimalsPage(),
+                  ),
                 ],
               ),
             ],
@@ -174,13 +194,13 @@ class _Segment {
   _Segment(this.title, this.value);
 }
 
-
 class ProfileTile extends StatelessWidget {
   final IconData icon;
   final String title;
   final Widget widget;
 
-  const ProfileTile({required this.icon, required this.title, Key? key, required this.widget})
+  const ProfileTile(
+      {required this.icon, required this.title, Key? key, required this.widget})
       : super(key: key);
 
   @override
@@ -220,5 +240,3 @@ class ProfileTile extends StatelessWidget {
     );
   }
 }
-
-

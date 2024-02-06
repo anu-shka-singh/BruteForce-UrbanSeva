@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dashboard/model/graph_model.dart';
+import 'package:flutter_dashboard/dashboard_models/graph_model.dart';
 
 class BarGraphModel {
   String lable;

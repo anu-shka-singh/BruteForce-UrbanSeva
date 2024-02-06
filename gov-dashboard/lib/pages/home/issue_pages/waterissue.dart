@@ -1,38 +1,33 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/menu.dart';
-import 'issue_tracker.dart';
+import '../../../dashoboard_components/menu.dart';
+import '../../issue_tracker.dart';
 
-class ElectricityPowerPage extends StatefulWidget {
-  const ElectricityPowerPage({super.key});
+class WaterSewerPage extends StatefulWidget {
+  const WaterSewerPage({super.key});
 
   @override
-  _ElectricityPowerPageState createState() => _ElectricityPowerPageState();
+  _WaterSewerPageState createState() => _WaterSewerPageState();
 }
 
-class _ElectricityPowerPageState extends State<ElectricityPowerPage> {
+class _WaterSewerPageState extends State<WaterSewerPage> {
   String selectedZone = 'All Zones'; // Default selection
 
   List<String> zones = ['All Zones', 'Zone A', 'Zone B', 'Zone C', 'Zone D'];
 
   List<Map<String, String>> issues = [
     {
-      'name': 'Frequent Power Cuts',
-      'area': 'Block 20, JanakPuri West',
-      'date': 'Dec 15, 2023'
+      'name': 'Blocked Drains',
+      'area': 'Block 14, Tilak Nagar',
+      'date': 'Jan 15, 2024'
     },
     {
-      'name': 'Street Lights Malfunctioning',
-      'area': 'Bus Route 3, Hari Nagar',
-      'date': 'Dec 2, 2023'
+      'name': 'Water Logging',
+      'area': 'Block 23, Street 2, Dwraka Mor',
+      'date': 'Dec 10, 2023'
     },
     {
-      'name': 'Voltage Fluctuations',
-      'area': 'Block 23, Tilak Nagar',
-      'date': 'Nov 10, 2023'
-    },
-    {
-      'name': 'Power Outrage',
+      'name': 'Overflowing Sewers',
       'area': 'Block 2, Subhash Nagar',
       'date': 'Oct 5, 2023'
     },
@@ -56,7 +51,7 @@ class _ElectricityPowerPageState extends State<ElectricityPowerPage> {
                 const Padding(
                   padding: EdgeInsets.all(30.0),
                   child: Text(
-                    "Electricity and Power Issues",
+                    "Water and Sewer Issues",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),
                   ),
                 ),

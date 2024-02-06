@@ -1,45 +1,40 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/menu.dart';
-import 'issue_tracker.dart';
+import '../../../dashoboard_components/menu.dart';
+import '../../issue_tracker.dart';
 
-class RoadTransportationPage extends StatefulWidget {
-  const RoadTransportationPage({super.key});
+class ElectricityPowerPage extends StatefulWidget {
+  const ElectricityPowerPage({super.key});
 
   @override
-  _RoadTransportationPageState createState() => _RoadTransportationPageState();
+  _ElectricityPowerPageState createState() => _ElectricityPowerPageState();
 }
 
-class _RoadTransportationPageState extends State<RoadTransportationPage> {
+class _ElectricityPowerPageState extends State<ElectricityPowerPage> {
   String selectedZone = 'All Zones'; // Default selection
 
   List<String> zones = ['All Zones', 'Zone A', 'Zone B', 'Zone C', 'Zone D'];
 
   List<Map<String, String>> issues = [
     {
-      'name': 'Pothole Issue',
-      'area': 'Block 14, Tilak Nagar',
-      'date': 'Oct 15, 2023'
+      'name': 'Frequent Power Cuts',
+      'area': 'Block 20, JanakPuri West',
+      'date': 'Dec 15, 2023'
     },
     {
-      'name': 'Under Construction Roads',
+      'name': 'Street Lights Malfunctioning',
+      'area': 'Bus Route 3, Hari Nagar',
+      'date': 'Dec 2, 2023'
+    },
+    {
+      'name': 'Voltage Fluctuations',
       'area': 'Block 23, Tilak Nagar',
-      'date': 'Oct 10, 2023'
+      'date': 'Nov 10, 2023'
     },
     {
-      'name': 'Damaged Roads',
+      'name': 'Power Outrage',
       'area': 'Block 2, Subhash Nagar',
       'date': 'Oct 5, 2023'
-    },
-    {
-      'name': 'Pothole Issue',
-      'area': 'Bus Route 3, Hari Nagar',
-      'date': 'Oct 2, 2023'
-    },
-    {
-      'name': 'Road Sign Missing',
-      'area': 'Street C, Rajouri Garden',
-      'date': 'Sep 28, 2023'
     },
   ];
 
@@ -61,7 +56,7 @@ class _RoadTransportationPageState extends State<RoadTransportationPage> {
                 const Padding(
                   padding: EdgeInsets.all(30.0),
                   child: Text(
-                    "Roads and Transportation Issues",
+                    "Electricity and Power Issues",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),
                   ),
                 ),

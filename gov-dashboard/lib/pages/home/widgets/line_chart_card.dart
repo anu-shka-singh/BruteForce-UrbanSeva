@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard/responsive.dart';
-import 'package:flutter_dashboard/widgets/custom_card.dart';
+import 'package:flutter_dashboard/dashoboard_components/custom_card.dart';
 
 class LineChartCard extends StatelessWidget {
   LineChartCard({super.key});
@@ -19,7 +19,6 @@ class LineChartCard extends StatelessWidget {
     FlSpot(90, 46),
     FlSpot(100, 40),
     FlSpot(110, 43),
-
   ];
 
   final leftTitle = {
@@ -53,7 +52,8 @@ class LineChartCard extends StatelessWidget {
         children: [
           const Text(
             "Number of issues reported",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
           ),
           const SizedBox(
             height: 20,

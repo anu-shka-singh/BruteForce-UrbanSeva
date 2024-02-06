@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/menu.dart';
-import 'issue_tracker.dart';
+import '../../../dashoboard_components/menu.dart';
+import '../../issue_tracker.dart';
 
 class StrayAnimalsPage extends StatefulWidget {
   const StrayAnimalsPage({super.key});

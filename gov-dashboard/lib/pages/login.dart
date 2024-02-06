@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dashboard/dashboard.dart';
 import 'package:provider/provider.dart';
-import 'home/user_provider.dart';
+import '../user_provider.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
