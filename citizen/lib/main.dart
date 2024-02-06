@@ -1,3 +1,4 @@
+import 'package:citizen/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'user_provider.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     ChangeNotifierProvider(
       create: (context) => UserProvider(),

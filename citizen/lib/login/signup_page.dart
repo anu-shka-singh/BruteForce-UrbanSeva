@@ -1,10 +1,9 @@
-//use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously
 
 import '../dbHelper/constant.dart';
 import '../dbHelper/datamodels.dart';
 import '../screens/user_dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:mongo_dart/mongo_dart.dart' as mongo_dart;
 import '../dbHelper/mongodb.dart';
 import 'signin_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,10 +20,12 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _nameTextController = TextEditingController();
 
-  Future<void> registerUserInFirebase(String email, String password) async {
+  void signup() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+          .createUserWithEmailAndPassword(
+              email: _emailTextController.text,
+              password: _passwordTextController.text);
 
       // User is registered in Firebase, now store additional data in MongoDB
       final data = Users(
@@ -34,15 +35,55 @@ class _SignUpState extends State<SignUp> {
 
       await MongoDatabase.db.collection(USER_COLLECTION).insert(data.toJson());
 
-      // Continue with your success dialog or navigation
-    } on FirebaseAuthException catch (e) {
-      // Handle FirebaseAuthException, e.g., if the email is already in use
-      print('Firebase Auth Exception: ${e.message}');
-      // Show an error dialog or take appropriate action
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Success'),
+          content: const Text('New User Registered.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        Dashboard(user: _nameTextController.text)),
+              ),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } catch (error) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Error'),
+          content: Text(error.toString()),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              ),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  Future<bool> doesUserExists(String email) async {
+    try {
+      // Check if the email is already registered
+      var methods =
+          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+
+      // If methods is not empty, a user with this email exists
+      return methods.isNotEmpty;
     } catch (e) {
-      // Handle other errors
-      print('Error: $e');
-      // Show an error dialog or take appropriate action
+      // Handle any errors
+      return false;
     }
   }
 
@@ -115,70 +156,9 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(
                   height: 20,
                 ),
-
                 // Use a custom button widget for reusability
-                signInSignUpButton(context, false, () async {
-                  final userExists =
-                      await checkUserExistence(_emailTextController.text);
-                  if (userExists) {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text('User Already Exists'),
-                        content:
-                            const Text('This email is already registered.'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginPage())),
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      ),
-                    );
-                  } else {
-                    try {
-                      await registerUserInFirebase(_emailTextController.text,
-                          _passwordTextController.text);
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('Success'),
-                          content: const Text('New User Registered.'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Dashboard(
-                                        user: _nameTextController.text)),
-                              ),
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    //on FirebaseAuthException
-                    catch (error) {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('Error'),
-                          content: Text("Error ${error.toString()}"),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  }
-                }),
+                signInSignUpButton(context, false, signup),
+
                 const SizedBox(
                   height: 10,
                 ),
@@ -212,39 +192,25 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Future<bool> checkUserExistence(String email) async {
-    try {
-      // Check if the email is already registered
-      var methods =
-          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
-
-      // If methods is not empty, a user with this email exists
-      return methods.isNotEmpty;
-    } catch (e) {
-      // Handle any errors
-      return false;
-    }
+  Widget signInSignUpButton(
+      BuildContext context, bool isSignIn, Function() onPressed) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFF21222D),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        minimumSize: const Size(150, 50),
+      ),
+      child: const Text(
+        "Sign Up",
+        style: TextStyle(
+          fontSize: 22,
+          color: Colors.white,
+        ),
+      ),
+    );
   }
-}
-
-Widget signInSignUpButton(
-    BuildContext context, bool isSignIn, Function() onPressed) {
-  return ElevatedButton(
-    onPressed: onPressed,
-    style: ElevatedButton.styleFrom(
-      backgroundColor: const Color(0xFF21222D),
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
-      ),
-      minimumSize: const Size(150, 50),
-    ),
-    child: const Text(
-      "Sign Up",
-      style: TextStyle(
-        fontSize: 22,
-        color: Colors.white,
-      ),
-    ),
-  );
 }

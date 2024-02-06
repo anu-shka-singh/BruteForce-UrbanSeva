@@ -1,6 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'package:citizen/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -26,7 +24,7 @@ void main() {
 }
 
 class _LoginState extends State<LoginPage> {
-  final FirebaseAuthService _auth = FirebaseAuthService();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
   var userData;
@@ -59,6 +57,75 @@ class _LoginState extends State<LoginPage> {
   }
 
   Future<void> handleSignOut() => googleSignIn.disconnect();
+
+  void signin() async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: _emailTextController.text,
+        password: _passwordTextController.text,
+      );
+
+      if (userCredential.user != null) {
+        // User exists, proceed with login
+        await showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text('Success'),
+            content: const Text('Login Successful.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          Dashboard(user: _emailTextController.text)),
+                ),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      } else {
+        // Handle if userCredential.user is null
+        await showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text("User Doesn't Exist"),
+            content: const Text('Sign Up to continue'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignUp()),
+                ),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      // Handle authentication errors
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text("Try Again"),
+          content: Text(e.toString()),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,99 +179,7 @@ class _LoginState extends State<LoginPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                signInSignUpButton(context, true, () async {
-                  try {
-                    bool userExists =
-                        await checkUserExistence(_emailTextController.text);
-                    print(userExists);
-
-                    if (userExists) {
-                      User? user = await _auth.signInWithEmailANdPassword(
-                          _emailTextController.text,
-                          _passwordTextController.text);
-
-                      if (user != null) {
-                        await showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            title: const Text('Success'),
-                            content: const Text('Login Successful.'),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Dashboard(
-                                          user: _emailTextController.text)),
-                                ),
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          ),
-                        );
-                      } else {
-                        await showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            title: const Text("Try Again"),
-                            content: const Text('Incorrect Password'),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoginPage()),
-                                  );
-                                },
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                    } else {
-                      // User doesn't exist, show appropriate dialog or handle it as needed
-                      await showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text("User Doesn't Exist"),
-                          content: const Text('Sign Up to continue'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SignUp()),
-                              ),
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  } //on FirebaseAuthException
-                  catch (error) {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text('Error'),
-                        content: Text("User does not exist"),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SignUp()),
-                            ),
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                }),
+                signInSignUpButton(context, true, signin),
                 const SizedBox(
                   height: 10,
                 ),
@@ -258,19 +233,5 @@ class _LoginState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  Future<bool> checkUserExistence(String email) async {
-    try {
-      // Check if the email is already registered
-      var methods =
-          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
-
-      // If methods is not empty, a user with this email exists
-      return methods.isNotEmpty;
-    } catch (e) {
-      // Handle any errors
-      return false;
-    }
   }
 }
