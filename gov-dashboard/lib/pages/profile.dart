@@ -65,23 +65,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(height: 40),
                       UserProfileInfo(
                           label: 'Name',
-                          value: '${userProvider.userData!['name']}'),
+                          value: '${userProvider.userData?['name'] ?? ''}'),
                       const SizedBox(height: 20),
                       UserProfileInfo(
                           label: 'Email',
-                          value: '${userProvider.userData!['email']}'),
+                          value: '${userProvider.userData?['email'] ?? ''}'),
                       const SizedBox(height: 20),
                       UserProfileInfo(
                           label: 'Phone',
-                          value: '${userProvider.userData!['phone']}'),
+                          value: '${userProvider.userData?['phone'] ?? ''}'),
                       const SizedBox(height: 20),
                       UserProfileInfo(
                           label: 'Pin Code',
-                          value: '${userProvider.userData!['pincode']}'),
+                          value: '${userProvider.userData?['pincode'] ?? ''}'),
                       const SizedBox(height: 20),
                       UserProfileInfo(
                           label: 'Zone',
-                          value: '${userProvider.userData!['zone']}'),
+                          value: '${userProvider.userData?['zone'] ?? ''}'),
                       const SizedBox(height: 20),
                     ],
                   ),
