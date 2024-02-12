@@ -26,5 +26,8 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:549467151088:ios:e0d088edea3a933a288035</string>
+
+	The API key should be removed from github, basic common sense
+
 </dict>
 </plist>
