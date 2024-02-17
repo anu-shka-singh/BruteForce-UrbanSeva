@@ -6,11 +6,10 @@ class SelectComplaintTypePage extends StatefulWidget {
   const SelectComplaintTypePage({super.key});
 
   @override
-  _SelectComplaintTypePageState createState() =>
-      _SelectComplaintTypePageState();
+  SelectComplaintTypePageState createState() => SelectComplaintTypePageState();
 }
 
-class _SelectComplaintTypePageState extends State<SelectComplaintTypePage> {
+class SelectComplaintTypePageState extends State<SelectComplaintTypePage> {
   String selectedUserType = "";
   int selectedidx = 0;
 
@@ -220,7 +219,7 @@ class ProbTypeTile extends StatelessWidget {
           onUserTypeSelected(text, index);
         },
         child: Padding(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(13),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

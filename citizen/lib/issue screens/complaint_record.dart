@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import '../dbHelper/constant.dart';
 import '../dbHelper/datamodels.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,7 @@ import 'dart:io';
 import 'complaint_confirm.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import '../dbHelper/mongodb.dart';
 
 class TakeComplain extends StatefulWidget {
@@ -23,6 +25,7 @@ class _TakeComplainState extends State<TakeComplain> {
   List _predictions = [];
   String status = "Not Verified";
   String base64Image = '';
+  String category = "";
 
   @override
   void initState() {
@@ -44,6 +47,43 @@ class _TakeComplainState extends State<TakeComplain> {
       _predictions = prediction!;
     });
   }
+
+  // detectdepth(File image) async {
+  //   final uri = Uri.parse('http://127.0.0.1:8000/predict');
+  //   final request = http.MultipartRequest('POST', uri)
+  //     ..files.add(await http.MultipartFile.fromPath('file', image.path));
+  //   final response = await http.Response.fromStream(await request.send());
+  //   print("response:$response");
+  //   print("outside set state");
+  //   setState(() {
+  //     print("inside set state");
+  //     category = response.body;
+  //   });
+  // }
+
+  Future<String> detectDepth(File imageFile) async {
+  const String apiUrl = 'http://127.0.0.1:8000/predict';
+  final String base64Image = base64Encode(await imageFile.readAsBytes());
+
+  try {
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      body: {
+        'image': base64Image,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      final String category = data['category'];
+      return category;
+    } else {
+      throw Exception('Failed to detect depth. Server responded with status ${response.statusCode}');
+    }
+  } catch (e) {
+    throw Exception('Error during detection of depth: $e');
+  }
+}
 
   loadmodel() async {
     await Tflite.loadModel(
@@ -68,6 +108,8 @@ class _TakeComplainState extends State<TakeComplain> {
     }
 
     detectimage(_image!);
+    print("classified from tflite");
+    category = detectDepth(_image!) as String;
   }
 
   List<List<String>> problems = [
@@ -323,6 +365,7 @@ class _TakeComplainState extends State<TakeComplain> {
                               print(_predictions[0]['label']
                                   .toString()
                                   .substring(2));
+                              print('category:$category');
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -368,24 +411,36 @@ class _TakeComplainState extends State<TakeComplain> {
                                   if (_predictions.isNotEmpty &&
                                       (_predictions[0]['label'][0].toString() ==
                                           widget.index.toString()))
-                                    const Row(
+                                    Column(
                                       children: [
-                                        Icon(
-                                          Icons.check_rounded,
-                                          color:
-                                              Color.fromARGB(255, 40, 117, 42),
-                                          size: 30,
+                                        const Row(
+                                          children: [
+                                            Icon(
+                                              Icons.check_rounded,
+                                              color:
+                                                  Color.fromARGB(255, 40, 117, 42),
+                                              size: 30,
+                                            ),
+                                            Text(
+                                              // _predictions[0]['label']
+                                              //     .toString()
+                                              //     .substring(2),
+                                              "Verified",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color.fromARGB(
+                                                    255, 40, 117, 42),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         Text(
-                                          // _predictions[0]['label']
-                                          //     .toString()
-                                          //     .substring(2),
-                                          "Verified",
-                                          style: TextStyle(
+                                          category,
+                                          style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
-                                            color: Color.fromARGB(
-                                                255, 40, 117, 42),
+                                            color: Color.fromARGB(255, 100, 101, 101),
                                           ),
                                         ),
                                       ],
@@ -393,24 +448,36 @@ class _TakeComplainState extends State<TakeComplain> {
                                   if (_predictions.isNotEmpty &&
                                       (_predictions[0]['label'][0].toString() !=
                                           widget.index.toString()))
-                                    const Row(
+                                    Column(
                                       children: [
-                                        Icon(
-                                          Icons.close_rounded,
-                                          color:
-                                              Color.fromARGB(255, 173, 24, 44),
-                                          size: 30,
+                                        const Row(
+                                          children: [
+                                            Icon(
+                                              Icons.close_rounded,
+                                              color:
+                                                  Color.fromARGB(255, 173, 24, 44),
+                                              size: 30,
+                                            ),
+                                            Text(
+                                              // _predictions[0]['label']
+                                              //     .toString()
+                                              //     .substring(2),
+                                              "Not Verified",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color.fromARGB(
+                                                    255, 173, 24, 44),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         Text(
-                                          // _predictions[0]['label']
-                                          //     .toString()
-                                          //     .substring(2),
-                                          "Not Verified",
-                                          style: TextStyle(
+                                          category,
+                                          style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
-                                            color: Color.fromARGB(
-                                                255, 173, 24, 44),
+                                            color: Color.fromARGB(255, 100, 101, 101),
                                           ),
                                         ),
                                       ],
