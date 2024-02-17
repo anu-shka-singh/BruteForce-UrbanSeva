@@ -1,21 +1,48 @@
+import 'package:citizen/dbHelper/mongodb.dart';
 import 'package:citizen/screens/user_dashboard.dart';
 import '../chatbot/chatbot_screen.dart';
 import 'community_page.dart';
-import '../user_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({super.key, required this.user});
   String user;
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  ProfileScreenState createState() => ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  late Map<String, dynamic> userData;
+class ProfileScreenState extends State<ProfileScreen> {
+    String name = "";
 
+  Future<void> fetchName(String? uid) async {
+    try {
+      print("inside fetch name");
+      final collection = MongoDatabase.db.collection('Users');
+      final query = mongo.where.eq('id', uid);
+      final cursor = await collection.find(query);
+      final userList = await cursor.toList();
+      if (userList.isNotEmpty) {
+        final n = userList[0]['name'] as String;
+        setState(() {
+          //widget.user = n;
+          name = n;
+          print("user:${widget.user}");
+          print("name:$name");
+        });
+      }
+    } catch (e) {
+      print("Error fetching user name: $e");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchName(widget.user);
+    print(widget.user);
+  }
   void _onItemTapped(int index) {
     if (index == 0) {
       Navigator.push(
@@ -52,12 +79,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      userProvider.fetchData();
-    });
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF21222D),
@@ -103,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    widget.user,
+                    name,
                     style: const TextStyle(
                         fontSize: 30, fontWeight: FontWeight.bold),
                   ),
