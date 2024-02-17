@@ -18,7 +18,7 @@ void main() {
 class _MyHomePageState extends State<MyHomePage> {
   late io.Socket socket;
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
     socket.on('alertAdded', (data) {
       // Handle the incoming data and show notifications
       print('Received alertAdded event: $data');
-      showNotification(data.toString());
+      showNotification(data['data']['auth'], data['data']['desc']);
     });
 
     _navigatetohome();
@@ -45,10 +45,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> initializeNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings(
-        '@mipmap/ic_launcher'); // Update this line
+        AndroidInitializationSettings(
+            '@mipmap/ic_launcher'); // Update this line
     const InitializationSettings initializationSettings =
-    InitializationSettings(android: initializationSettingsAndroid);
+        InitializationSettings(android: initializationSettingsAndroid);
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
@@ -58,9 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<void> showNotification(String message) async {
+  Future<void> showNotification(String auth, String desc) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-    AndroidNotificationDetails(
+        AndroidNotificationDetails(
       'channel_id',
       'channel_name',
       importance: Importance.max,
@@ -69,12 +69,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     const NotificationDetails platformChannelSpecifics =
-    NotificationDetails(android: androidPlatformChannelSpecifics);
+        NotificationDetails(android: androidPlatformChannelSpecifics);
 
     await flutterLocalNotificationsPlugin.show(
       0,
-      'New Alert',
-      message,
+      'New Alert by $auth',
+      desc,
       platformChannelSpecifics,
     );
   }
