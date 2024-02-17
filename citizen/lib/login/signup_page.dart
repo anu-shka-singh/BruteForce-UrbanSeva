@@ -12,25 +12,26 @@ class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
 
   @override
-  _SignUpState createState() => _SignUpState();
+  SignUpState createState() => SignUpState();
 }
 
-class _SignUpState extends State<SignUp> {
+class SignUpState extends State<SignUp> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _nameTextController = TextEditingController();
 
   void signup() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: _emailTextController.text,
-              password: _passwordTextController.text);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailTextController.text,
+        password: _passwordTextController.text,
+      );
 
       // User is registered in Firebase, now store additional data in MongoDB
       final data = Users(
-        name: _nameTextController.text,
         userId: userCredential.user?.uid ?? '', // Firebase UID
+        name: _nameTextController.text,
       );
 
       await MongoDatabase.db.collection(USER_COLLECTION).insert(data.toJson());
@@ -45,8 +46,7 @@ class _SignUpState extends State<SignUp> {
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        Dashboard(user: _nameTextController.text)),
+                    builder: (context) => Dashboard(user: data.userId)),
               ),
               child: const Text('OK'),
             ),
@@ -70,20 +70,6 @@ class _SignUpState extends State<SignUp> {
           ],
         ),
       );
-    }
-  }
-
-  Future<bool> doesUserExists(String email) async {
-    try {
-      // Check if the email is already registered
-      var methods =
-          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
-
-      // If methods is not empty, a user with this email exists
-      return methods.isNotEmpty;
-    } catch (e) {
-      // Handle any errors
-      return false;
     }
   }
 

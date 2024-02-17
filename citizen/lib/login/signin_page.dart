@@ -16,14 +16,14 @@ class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  LoginState createState() => LoginState();
 }
 
 void main() {
   runApp(const MaterialApp(home: LoginPage()));
 }
 
-class _LoginState extends State<LoginPage> {
+class LoginState extends State<LoginPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
@@ -52,11 +52,23 @@ class _LoginState extends State<LoginPage> {
     try {
       await googleSignIn.signIn();
     } catch (error) {
-      print("Sign in error: " + error.toString());
+      print("Sign in error: $error");
     }
   }
 
   Future<void> handleSignOut() => googleSignIn.disconnect();
+
+  // void fetchName(String? uid) async {
+  //   final collection = MongoDatabase.db.collection('Users');
+  //   final query = mongo.where.eq('id', uid);
+  //   final cursor = await collection.find(query);
+  //   print(cursor.toList());
+  //   String name = await cursor.toList()[0][0];
+  //   await Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => Dashboard(user: name)),
+  //   );
+  // }
 
   void signin() async {
     try {
@@ -67,6 +79,7 @@ class _LoginState extends State<LoginPage> {
 
       if (userCredential.user != null) {
         // User exists, proceed with login
+
         await showDialog(
           context: context,
           builder: (BuildContext context) => AlertDialog(
@@ -78,7 +91,7 @@ class _LoginState extends State<LoginPage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          Dashboard(user: _emailTextController.text)),
+                          Dashboard(user: userCredential.user?.uid)),
                 ),
                 child: const Text('OK'),
               ),

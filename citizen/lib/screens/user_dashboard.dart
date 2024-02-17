@@ -8,11 +8,12 @@ import '../login/signin_page.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import '../chatbot/chatbot_screen.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
 
 class Dashboard extends StatefulWidget {
   Color clr = Colors.grey;
   Color clr2 = Colors.grey;
-  String user;
+  String? user;
   Dashboard({super.key, required this.user});
   @override
   DashboardState createState() => DashboardState();
@@ -21,19 +22,39 @@ class Dashboard extends StatefulWidget {
 class DashboardState extends State<Dashboard> {
   Position? currentLocation;
   String name = "";
-  List<Map<String, dynamic>> Complaints = [];
+  List<Map<String, dynamic>> complaints = [];
 
   Future<void> fetchComplaints() async {
     final collection = MongoDatabase.db.collection('Complaints');
     final cursor = await collection.find();
-    Complaints = await cursor.toList();
+    complaints = await cursor.toList();
     setState(() {});
+  }
+
+  Future<void> fetchName(String? uid) async {
+    try {
+      final collection = MongoDatabase.db.collection('Users');
+      final query = mongo.where.eq('id', uid);
+      final cursor = await collection.find(query);
+      final userList = await cursor.toList();
+      if (userList.isNotEmpty) {
+        final n = userList[0]['name'] as String;
+        setState(() {
+          //widget.user = n;
+          name = n;
+          print("user:${widget.user}");
+          print("name:$name");
+        });
+      }
+    } catch (e) {
+      print("Error fetching user name: $e");
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    name = widget.user;
+    fetchName(widget.user);
     _getCurrentLocation().then((position) {
       setState(() {
         currentLocation = position;
@@ -88,25 +109,6 @@ class DashboardState extends State<Dashboard> {
     [true, true, true, true, false],
     [true, true, true, true, true],
   ];
-  final List<Color> taskColors = [
-    const Color.fromARGB(255, 255, 255, 255),
-    const Color.fromARGB(255, 255, 255, 255),
-    const Color.fromARGB(255, 255, 255, 255),
-    const Color.fromARGB(255, 251, 243, 176),
-    const Color.fromARGB(255, 251, 189, 220),
-  ];
-
-  // List<String> issue = [
-  //   'Open Pothole',
-  //   'Water Lodging',
-  //   'Blocked Drains',
-  // ];
-
-  // List<String> sub = [
-  //   'A Block, Street 14, Janakpuri West',
-  //   'Maharaja Roaj, Tilak Nagar',
-  //   '3 Block, Street 10, Tagore Garden',
-  // ];
 
   void _onItemTapped(int index) {
     if (index == 0) {
@@ -120,14 +122,14 @@ class DashboardState extends State<Dashboard> {
     } else if (index == 1) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Communities(user: widget.user)),
+        MaterialPageRoute(builder: (context) => Communities(user: name)),
       );
     } else if (index == 2) {
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => ChatBotScreen(
-                  user: widget.user,
+                  user: widget.user!,
                 )),
       );
     } else if (index == 3) {
@@ -135,7 +137,7 @@ class DashboardState extends State<Dashboard> {
         context,
         MaterialPageRoute(
             builder: (context) => ProfileScreen(
-                  user: widget.user,
+                  user: widget.user!,
                 )),
       );
     }
@@ -324,9 +326,9 @@ class DashboardState extends State<Dashboard> {
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: Complaints.length,
+                itemCount: complaints.length,
                 itemBuilder: (context, index) {
-                  final complaint = Complaints[index];
+                  final complaint = complaints[index];
                   return ProgressCard(
                     probType: complaint['problemType'],
                     probText: complaint['probText'],
