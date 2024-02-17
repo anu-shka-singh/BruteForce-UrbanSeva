@@ -28,6 +28,7 @@ class DashboardState extends State<Dashboard> {
     final collection = MongoDatabase.db.collection('Complaints');
     final cursor = await collection.find();
     complaints = await cursor.toList();
+    print(complaints);
     setState(() {});
   }
 
@@ -122,7 +123,8 @@ class DashboardState extends State<Dashboard> {
     } else if (index == 1) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Communities(user: name)),
+        MaterialPageRoute(
+            builder: (context) => Communities(user: widget.user!)),
       );
     } else if (index == 2) {
       Navigator.push(
@@ -170,6 +172,7 @@ class DashboardState extends State<Dashboard> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF21222D),
+        foregroundColor: Colors.white,
         elevation: 0,
         automaticallyImplyLeading: false,
         actions: [
@@ -251,7 +254,7 @@ class DashboardState extends State<Dashboard> {
           height: 20,
         ),
         Card(
-          elevation: 9,
+          elevation: 4,
           color: const Color.fromARGB(255, 255, 255, 255),
           margin: const EdgeInsets.all(14.0),
           shape: RoundedRectangleBorder(
@@ -420,11 +423,11 @@ class ProgressCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 2,
       color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      elevation: 2,
       margin: const EdgeInsets.all(12.0),
       child: Column(
         children: [
@@ -448,7 +451,7 @@ class ProgressCard extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            tileColor: Colors.white,
+            tileColor: Color(0x1AF2E0F8),
           ),
           Row(
             children: [
